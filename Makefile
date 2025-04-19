@@ -3,8 +3,8 @@ NAME=2048
 NAME_TEST=2048_test
 
 # Arquivos fonte do programa principal
-FILES=./src/main.o ./src/board.o ./src/tile.o ./src/moves.o
-TEST_FILES=./src/board.o ./src/tile.o ./src/moves.o ./tests/board.test.o
+FILES=./src/main.o ./src/board.o ./src/tile.o ./src/moves.o ./tests/utils.o
+TEST_FILES=./src/board.o ./src/tile.o ./src/moves.o ./tests/board.test.o ./tests/utils.o
 
 # Flags para o compilador
 CC_WARNING_FLAG=-ggdb -g -Wall -Wextra #-Werror -
@@ -35,6 +35,7 @@ re: fclean all
 
 # Compilação e execução dos testes
 test: $(NAME_TEST)
+	@clear
 	./$(NAME_TEST)
 
 $(NAME_TEST): $(TEST_FILES)

@@ -1,0 +1,70 @@
+g++ -ggdb -g -Wall -Wextra  -c src/moves.cpp -o src/moves.o
+g++ -ggdb -g -Wall -Wextra  src/board.o src/tile.o src/moves.o tests/board.test.o tests/utils.o -o 2048_test -lgtest -lgtest_main -pthread
+./2048_test
+Running main() from ./googletest/src/gtest_main.cc
+[==========] Running 14 tests from 4 test suites.
+[----------] Global test environment set-up.
+[----------] 1 test from set_random_tile
+[ RUN      ] set_random_tile.create_new_tile
+[       OK ] set_random_tile.create_new_tile (0 ms)
+[----------] 1 test from set_random_tile (0 ms total)
+
+[----------] 1 test from set_initial_tiles
+[ RUN      ] set_initial_tiles.setting_two_tiles_on_game_init
+[       OK ] set_initial_tiles.setting_two_tiles_on_game_init (0 ms)
+[----------] 1 test from set_initial_tiles (0 ms total)
+
+[----------] 6 tests from move_left
+[ RUN      ] move_left.simple_move_left
+[       OK ] move_left.simple_move_left (0 ms)
+[ RUN      ] move_left.simple_move_left_no_merge
+[       OK ] move_left.simple_move_left_no_merge (0 ms)
+[ RUN      ] move_left.simple_move_left_with_merge
+[       OK ] move_left.simple_move_left_with_merge (0 ms)
+[ RUN      ] move_left.complex_move_left
+[       OK ] move_left.complex_move_left (0 ms)
+[ RUN      ] move_left.complex_move_left_no_merge
+[       OK ] move_left.complex_move_left_no_merge (0 ms)
+[ RUN      ] move_left.complex_move_left_with_merge
+[       OK ] move_left.complex_move_left_with_merge (0 ms)
+[----------] 6 tests from move_left (0 ms total)
+
+[----------] 6 tests from move_right
+[ RUN      ] move_right.simple_move_right
+[       OK ] move_right.simple_move_right (0 ms)
+[ RUN      ] move_right.simple_move_right_no_merge
+[       OK ] move_right.simple_move_right_no_merge (0 ms)
+[ RUN      ] move_right.simple_move_right_with_merge
+[       OK ] move_right.simple_move_right_with_merge (0 ms)
+[ RUN      ] move_right.complex_move_right
+[       OK ] move_right.complex_move_right (0 ms)
+[ RUN      ] move_right.complex_move_right_no_merge
+EXPECTED: 
+
+ 0 0 2 4
+ 0 0 4 2
+ 0 0 4 2
+ 0 0 2 4
+After func: 
+
+ 0 0 2 4
+ 0 0 4 2
+ 0 4 0 2
+ 0 2 0 4
+tests/board.test.cpp:349: Failure
+Value of: result
+  Actual: false
+Expected: true
+
+[  FAILED  ] move_right.complex_move_right_no_merge (0 ms)
+[ RUN      ] move_right.complex_move_right_with_merge
+[       OK ] move_right.complex_move_right_with_merge (0 ms)
+[----------] 6 tests from move_right (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 14 tests from 4 test suites ran. (0 ms total)
+[  PASSED  ] 13 tests.
+[  FAILED  ] 1 test, listed below:
+[  FAILED  ] move_right.complex_move_right_no_merge
+
+ 1 FAILED TEST

@@ -1,27 +1,26 @@
 #include "../game.hpp"
+#include "../tests/tests.hpp"
 
 int	main(void)
 {
-	Direction dir_l = Direction::left;
-	Direction dir_r = Direction::right;
-	Direction dir_u = Direction::up;
-	Direction dir_d = Direction::down;
-
-	srand(time(NULL));
 	Board board;
-	board.print_table();
-	board.handle_direction(dir_l);
-	std::cout << "            " << std::endl;
-	board.print_table();
-	board.handle_direction(dir_r);
-	std::cout << "            " << std::endl;
-	board.print_table();
-	board.handle_direction(dir_u);
-	std::cout << "            " << std::endl;
-	board.print_table();
-	board.handle_direction(dir_d);
-	std::cout << "            " << std::endl;
-	board.print_table();
+	
 
+	int initial[4][4] = {
+		{4, 0, 0, 2},
+		{4, 2, 0, 2},
+		{2, 2, 2, 4},
+		{0, 2, 2, 4}
+	};
+/*
+	{0, 2, 4, 4},     
+	{0, 0, 4, 4},
+	{4, 4, 2, 2},
+	{2, 2, 2, 2}     2  2  0         
+*/
+	load_board(board, initial);
+	set_new_tile_after_movement(board);
+	set_new_tile_after_movement(board);
+	board.print_table();
 	return (0);
 }
