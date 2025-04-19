@@ -1,4 +1,5 @@
 #include "board.hpp"
+#include "moves.hpp"
 
 Tile Board::set_random_tile()
 {
@@ -26,6 +27,9 @@ void Board::set_initial_tiles()
 	Tile	a = set_random_tile();
 	Tile	b = set_random_tile();
 
+	a.set_value(2);
+	b.set_value(4);
+
 	while ((a.get_x() == b.get_x()) && (a.get_y() == b.get_y()))
 		a = set_random_tile();
 
@@ -51,17 +55,15 @@ Board::Board()
 	set_initial_tiles();
 }
 
-Tile Board::grid_at(int x, int y) const
+Tile &Board::grid_at(int x, int y)
 {
 	return grid[x][y];
 }
 
-/*void	move_left()
+void Board::handle_direction(Direction dir)
 {
-
-}*/
-
-
+    move(*this, dir);
+}
 
 
 

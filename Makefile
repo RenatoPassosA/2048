@@ -1,12 +1,15 @@
 # Nome do projeto
 NAME=2048
+NAME_TEST=2048_test
 
 # Arquivos fonte do programa principal
-FILES=./src/main.o ./src/board.o ./src/tile.o
+FILES=./src/main.o ./src/board.o ./src/tile.o ./src/moves.o
+TEST_FILES=./src/board.o ./src/tile.o ./src/moves.o ./tests/board.test.o
 
-# Flags para o compilador (lib para Google Test e warnings)
-CC_WARNING_FLAG=-ggdb -Wall -Wextra #-Werror 
-COMPILADOR=g++ $(CC_LIB_FLAG) $(CC_WARNING_FLAG)
+# Flags para o compilador
+CC_WARNING_FLAG=-ggdb -g -Wall -Wextra #-Werror -
+COMPILADOR=g++ $(CC_WARNING_FLAG)
+TEST_FLAGS=-lgtest -lgtest_main -pthread
 
 # Regras principais
 all: $(NAME)
@@ -31,6 +34,9 @@ fclean: clean
 re: fclean all
 
 # Compilação e execução dos testes
-test:
-	g++ src/board.cpp src/tile.cpp tests/board.test.cpp -o 2048_test -lgtest -lgtest_main -pthread
-	./2048_test
+test: $(NAME_TEST)
+	./$(NAME_TEST)
+
+$(NAME_TEST): $(TEST_FILES)
+	$(COMPILADOR) $^ -o $(NAME_TEST) $(TEST_FLAGS)
+
