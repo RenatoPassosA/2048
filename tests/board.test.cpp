@@ -218,6 +218,32 @@ TEST(move_left, complex_move_left_with_merge)
 	ASSERT_TRUE(result);
 }
 
+TEST(move_left, multiple_merge_with_different_values)
+{
+	Board board;
+
+	int initial[4][4] = {
+		{4, 4, 32, 32},
+		{128, 128, 0, 2},
+		{64, 64, 16, 16},
+		{2, 256, 256, 2}
+	};
+	int expected[4][4] = {
+		{8, 64, 0, 0},
+		{256, 2, 0, 0},
+		{128, 32, 0, 0},
+		{2, 512, 2, 0}
+	};
+
+	load_board(board, initial);
+	move_left(board);
+	bool result = compare_board(board, expected);
+
+	check_print(result, board, expected);
+
+	ASSERT_TRUE(result);
+}
+
 //TESTS move right
 TEST(move_right, simple_move_right)
 {
@@ -364,6 +390,32 @@ TEST(move_right, complex_move_right_with_merge)
 		{0, 0, 2, 4},
 		{0, 0, 0, 4},
 		{0, 0, 4, 4}
+	};
+
+	load_board(board, initial);
+	move_right(board);
+	bool result = compare_board(board, expected);
+
+	check_print(result, board, expected);
+
+	ASSERT_TRUE(result);
+}
+
+TEST(move_right, multiple_merge_with_different_values)
+{
+	Board board;
+
+	int initial[4][4] = {
+		{8,   8,   32,  32},
+		{128, 128, 0,   2},
+		{64,  64,  16,  16},
+		{2,   256, 256, 2}
+	};
+	int expected[4][4] = {
+		{0, 0, 16,  64},
+		{0, 0, 256, 2},
+		{0, 0, 128, 32},
+		{0, 2, 512, 2}
 	};
 
 	load_board(board, initial);
@@ -526,6 +578,32 @@ TEST(move_up, complex_move_up_with_merge)
 	ASSERT_TRUE(result);
 }
 
+TEST(move_up, multiple_merge_with_different_values)
+{
+	Board board;
+
+	int initial[4][4] = {
+		{128, 8,   256, 64},
+		{128, 32,  256, 64},
+		{64,  32,  4,   2},
+		{2,   256, 4,   2}
+	};
+	int expected[4][4] = {
+		{256, 8,   512, 128},
+		{64,  64,  8,   4},
+		{2,   256, 0,   0},
+		{0,   0,   0,   0}
+	};
+
+	load_board(board, initial);
+	move_up(board);
+	bool result = compare_board(board, expected);
+
+	check_print(result, board, expected);
+
+	ASSERT_TRUE(result);
+}
+
 //TESTS move down
 TEST(move_down, simple_move_down)
 {
@@ -677,6 +755,33 @@ TEST(move_down, complex_move_down_with_merge)
 	ASSERT_TRUE(result);
 }
 
+TEST(move_down, multiple_merge_with_different_values)
+{
+	Board board;
+
+	int initial[4][4] = {
+		{128, 8,   256, 64},
+		{128, 32,  256, 64},
+		{64,  32,  4,   2},
+		{2,   256, 4,   2}
+	};
+	int expected[4][4] = {
+		{0,   0,   0,   0},
+		{256, 8,   0,   0},
+		{64,  64,  512, 128},
+		{2,   256, 8,   4}
+	};
+
+	load_board(board, initial);
+	move_down(board);
+	bool result = compare_board(board, expected);
+
+	check_print(result, board, expected);
+
+	ASSERT_TRUE(result);
+}
+
+//TEST new random tile after move
 TEST(set_new_tile_after_movement, set_new_tile_after_move_and_check_value)
 {
 	Board board;
@@ -695,7 +800,7 @@ TEST(set_new_tile_after_movement, set_new_tile_after_move_and_check_value)
 	};
 
 	load_board(board, initial);
-	set_new_tile_after_movement(board);
+	board.set_new_tile_after_movement();
 	
 	while (x < 4)
 	{
@@ -713,11 +818,326 @@ TEST(set_new_tile_after_movement, set_new_tile_after_move_and_check_value)
 
 	ASSERT_EQ(counter, expected);
 	ASSERT_TRUE(new_tile_value == 2 || new_tile_value == 4);
+}
+
+//TEST updating score
+TEST(update_score, score_increases_correctly_after_move_left)
+{
+	Board board;
+	int expected = 20;
+
+	int initial[4][4] = {
+		{4, 4, 0, 2}, //4 + 4 = 8
+		{4, 2, 0, 2}, //2 + 2 = 4
+		{2, 2, 2, 4}, //2 + 2 = 4
+		{0, 2, 2, 4}  //2 + 2 = 4
+	};
+
+	ASSERT_EQ(board.get_score(), 0); //verificação se o score estava 0
+
+	load_board(board, initial);
+	move_left(board);
+	
+	ASSERT_EQ(board.get_score(), expected);
+}
+
+//TEST checking game over
+TEST(can_move, board_with_possible_moves)
+{
+	Board board;
+	
+	int initial[4][4] = {
+		{4, 2, 0, 2},
+		{4, 2, 4, 2},
+		{2, 2, 2, 4},
+		{2, 2, 2, 4}
+	};
+
+	load_board(board, initial);
+
+	EXPECT_TRUE(board.can_move());
+}
+
+TEST(can_move, board_with_no_possible_moves)
+{
+	Board board;
+	
+	int initial[4][4] = {
+		{4, 2, 4, 2},
+		{2, 4, 2, 4},
+		{4, 2, 4, 2},
+		{2, 4, 2, 4}
+	};
+
+	load_board(board, initial);
+
+	EXPECT_FALSE(board.can_move());
+}
+
+TEST(can_move, board_with_possible_col_merge)
+{
+	Board board;
+	
+	int initial[4][4] = {
+		{4, 2, 4, 2},
+		{2, 4, 2, 4},
+		{4, 8, 2, 8},
+		{2, 4, 2, 2}
+	};
+
+	load_board(board, initial);
+
+	EXPECT_TRUE(board.can_move());
+}
+
+TEST(can_move, board_with_possible_row_merge)
+{
+	Board board;
+	
+	int initial[4][4] = {
+		{4, 2, 4, 2},
+		{2, 4, 2, 8},
+		{4, 2, 4, 4},
+		{2, 4, 2, 2}
+	};
+
+	load_board(board, initial);
+
+	EXPECT_TRUE(board.can_move());
+}
+
+TEST(can_move, board_with_no_possible_merge)
+{
+	Board board;
+	
+	int initial[4][4] = {
+		{4, 2, 4, 2},
+		{2, 4, 2, 4},
+		{4, 2, 4, 2},
+		{2, 4, 2, 4}
+	};
+
+	load_board(board, initial);
+
+	EXPECT_FALSE(board.can_move());
+}
+
+//TEST undo
+TEST(undo, simple_undo)
+{
+	Board board;
+	
+	int initial[4][4] = {
+		{2, 2, 4, 4}, // 0 0 4 8
+		{2, 2, 2, 2}, // 0 0 4 4
+		{4, 0, 4, 0}, // 0 0 4 4
+		{2, 2, 2, 4}  // 0 0 4 4
+	};
+
+	int expected[4][4] = {
+		{2, 2, 4, 4},
+		{2, 2, 2, 2},
+		{4, 0, 4, 0},
+		{2, 2, 2, 4}
+	};
+
+	load_board(board, initial);
+	board.save_history();
+	move_right(board);
+	board.undo();
+
+	ASSERT_TRUE(compare_board(board, expected));
+}
+
+TEST(undo, simple_undo_after_2_moves)
+{
+	Board board;
+	
+	int initial[4][4] = {
+		{2, 2, 4, 4}, // 0 0 4 8  // 0 0 0 0
+		{2, 2, 2, 2}, // 0 0 4 4  // 0 0 0 8
+		{4, 0, 4, 0}, // 0 0 0 8  // 0 0 8 4
+		{2, 2, 2, 4}  // 0 2 4 4  // 0 0 8 8
+	};
+
+	int expected[4][4] = {
+		{0, 0, 4, 8},
+		{0, 0, 4, 4},
+		{0, 0, 0, 8},
+		{0, 2, 4, 4}
+	};
+
+	load_board(board, initial);
+	board.save_history();
+	move_right(board);
+	board.save_history();
+	move_down(board);
+	board.undo();
+	
+	ASSERT_TRUE(compare_board(board, expected));
 
 }
 
+TEST(undo, simple_undo_after_3_moves)
+{
+	Board board;
+	
+	int initial[4][4] = {
+		{2, 2, 4, 4}, // 0 0 4 8    // 0 0 0 8
+		{2, 2, 2, 2}, // 0 0 4 4    // 0 0 0 4
+		{4, 0, 4, 0}, // 0 0 0 8    // 0 0 4 8
+		{2, 2, 2, 4}  // 0 2 4 4    // 0 2 8 4
+	};				  //move_right  //move_down
 
+	int expected[4][4] = {
+		{0, 0, 0, 8},
+		{0, 0, 0, 4},
+		{0, 0, 4, 8},
+		{0, 2, 8, 4}
+	};
 
+	load_board(board, initial);
+	board.save_history();
+	move_right(board);
+	board.save_history();
+	move_down(board);
+	board.save_history();
+	move_up(board);
+	board.undo();
 
+	ASSERT_TRUE(compare_board(board, expected));
 
+}
 
+TEST(undo, 5_times_undo_after_5_moves)
+{
+	Board board;
+	
+	int initial[4][4] = {
+		{2, 2, 4, 4},     // 0 0 8 8     // 0 0 0 8   // 0 2 16 8  // 0 2 16 8  // 2 16 8 0
+		{2, 2, 2, 2},     // 0 0 4 4     // 0 0 0 4   // 0 0 0  4  // 0 0 0  4  // 4  0 0 0
+		{4, 0, 4, 0},     // 0 0 0 8     // 0 0 8 8   // 0 0 0  8  // 0 0 0  8  // 8  0 0 0
+		{2, 2, 2, 4}      // 0 2 4 4     // 0 2 8 4   // 0 0 0  4  // 0 0 0  4  // 4  0 0 0
+	};                    //move_ right  //move_down  //move_up    //move_down  //move_left
+
+	int expected[4][4] = {
+		{2, 2, 4, 4},
+		{2, 2, 2, 2},
+		{4, 0, 4, 0},
+		{2, 2, 2, 4}
+	};
+
+	load_board(board, initial);
+	board.save_history();
+	move_right(board);
+	board.save_history();
+	move_down(board);
+	board.save_history();
+	move_up(board);
+	board.save_history();
+	move_right(board);
+	board.save_history();
+	move_left(board);
+	board.undo();
+	board.undo();
+	board.undo();
+	board.undo();
+	board.undo();
+
+	ASSERT_TRUE(compare_board(board, expected));
+}
+
+TEST(undo, new_move_in_middle_of_history_check_previous)
+{
+	Board board;
+	
+	int initial[4][4] = {
+		{4, 4, 4, 4}, // 0 0 8 8    // 0 0 0  8  // 0 2 8  8
+		{4, 4, 2, 2}, // 0 0 8 4    // 0 0 8  4  // 0 0 16 4
+		{4, 4, 4, 4}, // 0 0 8 8    // 0 0 16 8  // 0 0 4  8
+		{2, 2, 2, 4}  // 0 2 4 4    // 0 2 4  4  // 0 0 0  4
+	};				  //move_right  //move_down  // move_up
+
+	int expected1[4][4] = {
+		{0, 2, 8, 8},
+		{0, 0, 16, 4},
+		{0, 0, 4, 8},
+		{0, 0, 0, 4}
+	};
+
+	int expected2[4][4] = {
+		{0, 0, 0, 8},   // 2  16 0 0
+		{0, 0, 8, 4},  // 16 4  0 0
+		{0, 0, 16, 8},   // 4  8  0 0
+		{0, 2, 4, 4}    // 4  0  0 0
+	};					//move_left
+
+	load_board(board, initial);
+	board.save_history();
+	move_right(board);
+	board.save_history();
+	move_down(board);
+	board.save_history();
+	move_up(board);
+	board.save_history();
+	move_down(board);
+	board.save_history();
+	move_right(board);
+	board.undo();
+	board.undo();
+
+	//board.print_table();
+
+	EXPECT_TRUE(compare_board(board, expected1));
+
+	board.save_history();
+	move_left(board);
+	board.undo();
+	board.undo();
+
+	//board.print_table();
+
+	EXPECT_TRUE(compare_board(board, expected2));
+
+}
+
+TEST(undo, calling_undo_more_than_5_times)
+{
+	Board board;
+	bool arr[5];
+	
+	int initial[4][4] = {
+		{2, 2, 4, 4},
+		{2, 2, 2, 2},
+		{4, 0, 4, 0},
+		{2, 2, 2, 4}  
+	};                   
+
+	load_board(board, initial);
+	board.save_history();
+	move_right(board);
+	board.save_history();
+	move_down(board);
+	board.save_history();
+	move_up(board);
+	board.save_history();
+	move_right(board);
+	board.save_history();
+	move_left(board);
+	board.save_history();
+	move_left(board);
+	arr[0] = board.undo();
+	arr[1] = board.undo();
+	arr[2] = board.undo();
+	arr[3] = board.undo();
+	arr[4] = board.undo();
+	arr[5] = board.undo();
+
+	EXPECT_TRUE(arr[0]);
+	EXPECT_TRUE(arr[1]);
+	EXPECT_TRUE(arr[2]);
+	EXPECT_TRUE(arr[3]);
+	EXPECT_TRUE(arr[4]);
+	EXPECT_FALSE(arr[5]);
+
+}

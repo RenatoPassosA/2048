@@ -34,11 +34,51 @@ void Board::set_initial_tiles()
 	grid[b.get_x()][b.get_y()].set_value(b.get_value());
 }	
 
-Board::Board()
+bool	has_empty_tile(Board &board)
 {
 	int x = 0;
 	int y = 0;
 
+	while (x < 4)
+	{
+		while (y < 4)
+		{
+			if (board.grid_at(x, y).get_value() == 0)
+				return true;
+			y++;
+		}
+		y = 0;
+		x++;
+	}
+	return false;
+}
+
+void	Board::set_new_tile_after_movement()
+{
+	if (!has_empty_tile(*this))
+		return ;
+
+	Tile new_tile = this->set_random_tile();
+	int x = new_tile.get_x();
+	int y = new_tile.get_y();
+
+	while (this->grid_at(x, y).get_value() != 0)
+	{
+		new_tile = this->set_random_tile();
+		x = new_tile.get_x();
+		y = new_tile.get_y();
+	}
+	this->grid_at(x, y).set_value(new_tile.get_value());
+}
+
+Board::Board()
+{
+	score = 0;
+	undo_count = 5;
+
+	int x = 0;
+	int y = 0;
+	
 	while (x < 4)
 	{
 		while (y < 4)
@@ -52,6 +92,120 @@ Board::Board()
 	set_initial_tiles();
 }
 
+static bool check_up(Board board, int x, int y)
+{
+	int up = x - 1;
+	if (up < 0)
+		return (false);
+	
+	int up_value = board.grid_at(up, y).get_value();
+	int current_value = board.grid_at(x, y).get_value();
+	
+	return (up_value == current_value);
+}
+
+static bool check_down(Board board, int x, int y)
+{
+	int down = x + 1;
+	if (down > 3)
+		return (false);
+
+	int down_value = board.grid_at(down, y).get_value();
+	int current_value = board.grid_at(x, y).get_value();
+
+	return (down_value == current_value);
+}
+
+static bool check_left(Board board, int x, int y)
+{
+	int left = y - 1;
+	if (left < 0)
+		return (false);
+
+	int left_value = board.grid_at(x, left).get_value();
+	int current_value = board.grid_at(x, y).get_value();
+	
+	return (left_value == current_value);
+}
+
+static bool check_right(Board board, int x, int y)
+{
+	int right = y + 1;
+	if (right > 3)
+		return (false);
+
+	int right_value = board.grid_at(x, right).get_value();
+	int current_value = board.grid_at(x, y).get_value();
+	
+	return (right_value == current_value);
+}
+
+static bool check_neigbors(Board &board, int x, int y)
+{
+	return (check_up(board, x, y) ||
+	check_down(board, x, y) ||
+	check_left(board, x, y) ||
+	check_right(board, x, y));
+}
+
+bool	Board::can_move()
+{
+	int		x = 0;
+	int		y = 0;
+	int		value_flag = 0;
+	bool	merge_flag;
+
+	while (x < 4)
+	{
+		while (y < 4)
+		{
+			value_flag = this->grid_at(x, y).get_value();
+			if (value_flag == 0)
+				return (true); //pode mover
+			merge_flag = check_neigbors(*this, x, y);
+			if (merge_flag)
+				return (true); //pode mover
+			y++;
+		}
+		y = 0;
+		x++;
+	}
+	return (false);
+}
+
+void	Board::save_history()
+{
+	history.insert(history.begin(), *this);
+	if (history.size() > 5) {
+		history.pop_back();
+	}
+}
+
+bool	Board::undo()
+{
+	int x = 0;
+	int y = 0;
+	
+	int history_value = 0;
+
+	if (this->undo_count == 0)
+		return (false);
+	this->decrement_undo();
+	while (x < 4)
+	{
+		while (y < 4)
+		{
+			history_value = history.at(0).grid_at(x, y).get_value();
+			this->grid_at(x, y).set_value(history_value);
+			y++;
+		}
+		y = 0;
+		x++;
+	}
+	history.erase(history.begin());
+	return (true);
+}
+
 Tile &Board::grid_at(int x, int y)
 {
 	return grid[x][y];
@@ -60,6 +214,21 @@ Tile &Board::grid_at(int x, int y)
 void Board::handle_direction(Direction dir)
 {
     move(*this, dir);
+}
+
+void Board::update_score(int val)
+{
+	this->score += val;
+}
+
+int Board::get_score()
+{
+	return (this->score);
+}
+
+void Board::decrement_undo()
+{
+	this->undo_count--;
 }
 
 

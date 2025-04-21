@@ -1,8 +1,8 @@
-g++ -ggdb -g -Wall -Wextra  -c src/moves.cpp -o src/moves.o
+g++ -ggdb -g -Wall -Wextra  -c tests/board.test.cpp -o tests/board.test.o
 g++ -ggdb -g -Wall -Wextra  src/board.o src/tile.o src/moves.o tests/board.test.o tests/utils.o -o 2048_test -lgtest -lgtest_main -pthread
-./2048_test
+[H[2J[3J./2048_test
 Running main() from ./googletest/src/gtest_main.cc
-[==========] Running 14 tests from 4 test suites.
+[==========] Running 40 tests from 10 test suites.
 [----------] Global test environment set-up.
 [----------] 1 test from set_random_tile
 [ RUN      ] set_random_tile.create_new_tile
@@ -14,7 +14,7 @@ Running main() from ./googletest/src/gtest_main.cc
 [       OK ] set_initial_tiles.setting_two_tiles_on_game_init (0 ms)
 [----------] 1 test from set_initial_tiles (0 ms total)
 
-[----------] 6 tests from move_left
+[----------] 7 tests from move_left
 [ RUN      ] move_left.simple_move_left
 [       OK ] move_left.simple_move_left (0 ms)
 [ RUN      ] move_left.simple_move_left_no_merge
@@ -27,7 +27,13 @@ Running main() from ./googletest/src/gtest_main.cc
 [       OK ] move_left.complex_move_left_no_merge (0 ms)
 [ RUN      ] move_left.complex_move_left_with_merge
 [       OK ] move_left.complex_move_left_with_merge (0 ms)
-[----------] 6 tests from move_left (0 ms total)
+[ RUN      ] move_left.mergin_values
+ 8 64 0 0
+ 256 2 0 0
+ 128 32 0 0
+ 2 512 2 0
+[       OK ] move_left.mergin_values (0 ms)
+[----------] 7 tests from move_left (0 ms total)
 
 [----------] 6 tests from move_right
 [ RUN      ] move_right.simple_move_right
@@ -39,32 +45,79 @@ Running main() from ./googletest/src/gtest_main.cc
 [ RUN      ] move_right.complex_move_right
 [       OK ] move_right.complex_move_right (0 ms)
 [ RUN      ] move_right.complex_move_right_no_merge
-EXPECTED: 
-
- 0 0 2 4
- 0 0 4 2
- 0 0 4 2
- 0 0 2 4
-After func: 
-
- 0 0 2 4
- 0 0 4 2
- 0 4 0 2
- 0 2 0 4
-tests/board.test.cpp:349: Failure
-Value of: result
-  Actual: false
-Expected: true
-
-[  FAILED  ] move_right.complex_move_right_no_merge (0 ms)
+[       OK ] move_right.complex_move_right_no_merge (0 ms)
 [ RUN      ] move_right.complex_move_right_with_merge
 [       OK ] move_right.complex_move_right_with_merge (0 ms)
 [----------] 6 tests from move_right (0 ms total)
 
-[----------] Global test environment tear-down
-[==========] 14 tests from 4 test suites ran. (0 ms total)
-[  PASSED  ] 13 tests.
-[  FAILED  ] 1 test, listed below:
-[  FAILED  ] move_right.complex_move_right_no_merge
+[----------] 6 tests from move_up
+[ RUN      ] move_up.simple_move_up
+[       OK ] move_up.simple_move_up (0 ms)
+[ RUN      ] move_up.simple_move_up_no_merge
+[       OK ] move_up.simple_move_up_no_merge (0 ms)
+[ RUN      ] move_up.simple_move_up_with_merge
+[       OK ] move_up.simple_move_up_with_merge (0 ms)
+[ RUN      ] move_up.complex_move_up
+[       OK ] move_up.complex_move_up (0 ms)
+[ RUN      ] move_up.complex_move_up_no_merge
+[       OK ] move_up.complex_move_up_no_merge (0 ms)
+[ RUN      ] move_up.complex_move_up_with_merge
+[       OK ] move_up.complex_move_up_with_merge (0 ms)
+[----------] 6 tests from move_up (0 ms total)
 
- 1 FAILED TEST
+[----------] 6 tests from move_down
+[ RUN      ] move_down.simple_move_down
+[       OK ] move_down.simple_move_down (0 ms)
+[ RUN      ] move_down.simple_move_down_no_merge
+[       OK ] move_down.simple_move_down_no_merge (0 ms)
+[ RUN      ] move_down.simple_move_down_with_merge
+[       OK ] move_down.simple_move_down_with_merge (0 ms)
+[ RUN      ] move_down.complex_move_down
+[       OK ] move_down.complex_move_down (0 ms)
+[ RUN      ] move_down.complex_move_down_no_merge
+[       OK ] move_down.complex_move_down_no_merge (0 ms)
+[ RUN      ] move_down.complex_move_down_with_merge
+[       OK ] move_down.complex_move_down_with_merge (0 ms)
+[----------] 6 tests from move_down (0 ms total)
+
+[----------] 1 test from set_new_tile_after_movement
+[ RUN      ] set_new_tile_after_movement.set_new_tile_after_move_and_check_value
+[       OK ] set_new_tile_after_movement.set_new_tile_after_move_and_check_value (0 ms)
+[----------] 1 test from set_new_tile_after_movement (0 ms total)
+
+[----------] 1 test from update_score
+[ RUN      ] update_score.score_increases_correctly_after_move_left
+[       OK ] update_score.score_increases_correctly_after_move_left (0 ms)
+[----------] 1 test from update_score (0 ms total)
+
+[----------] 5 tests from can_move
+[ RUN      ] can_move.board_with_possible_moves
+[       OK ] can_move.board_with_possible_moves (0 ms)
+[ RUN      ] can_move.board_with_no_possible_moves
+[       OK ] can_move.board_with_no_possible_moves (0 ms)
+[ RUN      ] can_move.board_with_possible_col_merge
+[       OK ] can_move.board_with_possible_col_merge (0 ms)
+[ RUN      ] can_move.board_with_possible_row_merge
+[       OK ] can_move.board_with_possible_row_merge (0 ms)
+[ RUN      ] can_move.board_with_no_possible_merge
+[       OK ] can_move.board_with_no_possible_merge (0 ms)
+[----------] 5 tests from can_move (0 ms total)
+
+[----------] 6 tests from undo
+[ RUN      ] undo.simple_undo
+[       OK ] undo.simple_undo (0 ms)
+[ RUN      ] undo.simple_undo_after_2_moves
+[       OK ] undo.simple_undo_after_2_moves (0 ms)
+[ RUN      ] undo.simple_undo_after_3_moves
+[       OK ] undo.simple_undo_after_3_moves (0 ms)
+[ RUN      ] undo.5_times_undo_after_5_moves
+[       OK ] undo.5_times_undo_after_5_moves (0 ms)
+[ RUN      ] undo.new_move_in_middle_of_history_check_previous
+[       OK ] undo.new_move_in_middle_of_history_check_previous (0 ms)
+[ RUN      ] undo.calling_undo_more_than_5_times
+[       OK ] undo.calling_undo_more_than_5_times (0 ms)
+[----------] 6 tests from undo (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 40 tests from 10 test suites ran. (0 ms total)
+[  PASSED  ] 40 tests.

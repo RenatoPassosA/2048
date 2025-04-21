@@ -4,23 +4,18 @@
 int	main(void)
 {
 	Board board;
-	
 
 	int initial[4][4] = {
-		{4, 0, 0, 2},
-		{4, 2, 0, 2},
-		{2, 2, 2, 4},
-		{0, 2, 2, 4}
+		{4, 4, 32, 32},
+		{128, 128, 0, 2},
+		{64, 64, 16, 16},
+		{2, 256, 256, 2}
 	};
-/*
-	{0, 2, 4, 4},     
-	{0, 0, 4, 4},
-	{4, 4, 2, 2},
-	{2, 2, 2, 2}     2  2  0         
-*/
+
 	load_board(board, initial);
-	set_new_tile_after_movement(board);
-	set_new_tile_after_movement(board);
+	move_left(board);
 	board.print_table();
+	
+	
 	return (0);
 }
