@@ -4,7 +4,6 @@
 # Ignorar arquivos de texto
 *.txt
 
-# Outros exemplos úteis:
 # Ignorar executáveis
 a.out
 *.exe

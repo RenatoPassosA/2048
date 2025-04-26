@@ -140,7 +140,7 @@ static bool check_right(Board board, int x, int y)
 	return (right_value == current_value);
 }
 
-static bool check_neigbors(Board &board, int x, int y)
+static bool check_neighbors(Board &board, int x, int y)
 {
 	return (check_up(board, x, y) ||
 	check_down(board, x, y) ||
@@ -162,7 +162,7 @@ bool	Board::can_move()
 			value_flag = this->grid_at(x, y).get_value();
 			if (value_flag == 0)
 				return (true); //pode mover
-			merge_flag = check_neigbors(*this, x, y);
+			merge_flag = check_neighbors(*this, x, y);
 			if (merge_flag)
 				return (true); //pode mover
 			y++;

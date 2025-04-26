@@ -21,6 +21,7 @@ class Board{
 	
 	public:
 		Board();
+		Tile	&grid_at(int x, int y);
 		Tile	set_random_tile();
 		void	set_initial_tiles();
 		void	set_new_tile_after_movement();
@@ -34,8 +35,7 @@ class Board{
 
 
 		
-		//void	check_end_game();
-		Tile	&grid_at(int x, int y);
+		
 		void	print_table();
 };
 
