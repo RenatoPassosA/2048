@@ -1141,3 +1141,47 @@ TEST(undo, calling_undo_more_than_5_times)
 	EXPECT_FALSE(arr[5]);
 
 }
+
+//TEST new_game
+TEST(new_game, call_new_game_and_check_values)
+{
+	Board board;
+	bool arr[5];
+	
+	int initial[4][4] = {
+		{2, 2, 4, 4},
+		{2, 2, 2, 2},
+		{4, 0, 4, 0},
+		{2, 2, 2, 4}  
+	};  
+
+	load_board(board, initial);
+
+	int undo_expect = 5;
+	int score_expect = 0;
+	int	tiles_counter = 0;
+	int x = 0;
+	int y = 0;
+
+	board.new_game();
+
+	while (x < 4)
+	{
+		while (y < 4)
+		{
+			if (board.grid_at(x, y).get_value() != 0)
+			tiles_counter++;
+			if (initial[x][y] == 0 && board.grid_at(x, y).get_value() != 0)
+			tiles_counter = board.grid_at(x, y).get_value();
+			y++;
+		}
+		y = 0;
+		x++;
+	}
+
+	EXPECT_EQ(board.get_undo_counter(), undo_expect);
+	EXPECT_EQ(board.get_score(), score_expect);
+	EXPECT_TRUE(tiles_counter == 2);
+
+
+}

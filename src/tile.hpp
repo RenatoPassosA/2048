@@ -24,6 +24,8 @@ public:
 	void		set_value(int value);
 	void		set_x(int x);
 	void		set_y(int y);
+	
+
 };
 
 #endif

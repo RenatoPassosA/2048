@@ -1,6 +1,25 @@
 #include "board.hpp"
 #include "moves.hpp"
 
+void	Board::new_game()
+{
+	int x = 0;
+	int y = 0;
+
+	while (x < 4)
+	{
+		while (y < 4)
+		{
+			grid_at(x, y).set_value(0);
+			y++;
+		}
+		y = 0;
+		x++;
+	}
+	set_initial_tiles();
+	this->score = 0;
+	this->undo_count = 5;	
+}
 Tile Board::set_random_tile()
 {
 	int	rand_x;
@@ -224,6 +243,10 @@ void Board::update_score(int val)
 int Board::get_score()
 {
 	return (this->score);
+}
+int Board::get_undo_counter()
+{
+	return (this->undo_count);
 }
 
 void Board::decrement_undo()

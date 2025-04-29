@@ -1,73 +1,55 @@
 #include "render_tile.hpp"
 
-TileColors::TileColors()
+/*
+Classe render tile:
+	representar visualmente cada tile lógico.
+	ter acesso aos atributos do tile lógigo.
+	ser capaz de atualizar o visual conforme o decorrer do jogo.
+*/
+
+RenderTile::RenderTile(Tile &tile, TileColors &colors, sf::Font &font)
+	: tile_ref(tile), font_ref(font), color_ref(colors)
 {
-	colorMap = {
-		{0,    sf::Color(205, 193, 180)},
-		{2,    sf::Color(238, 228, 218)},
-		{4,    sf::Color(237, 224, 200)},
-		{8,    sf::Color(242, 177, 121)},
-		{16,   sf::Color(245, 149, 99)},
-		{32,   sf::Color(246, 124, 95)},
-		{64,   sf::Color(246, 94, 59)},
-		{128,  sf::Color(237, 207, 114)},
-		{256,  sf::Color(237, 204, 97)},
-		{512,  sf::Color(237, 200, 80)},
-		{1024, sf::Color(237, 197, 63)},
-		{2048, sf::Color(237, 194, 46)},
-		{4096, sf::Color(237, 190, 30)},
-		{8192, sf::Color(237, 187, 0)},
-		{16384,sf::Color(237, 183, 0)},
-		{32768,sf::Color(237, 180, 0)},
-		{65536,sf::Color(237, 176, 0)},
-		{131072,sf::Color(237, 173, 0)}
-	};
+	int tile_size = 100;
+	int margin = 10;
+	int panel_score_height = 100;
+	int window_width = 500;
+
+	int board_width = (tile_size * 4) + (margin * 3);
+	int	out_margin = (window_width - board_width) / 2;
+
+	int pos_x = out_margin + tile.get_x() * (tile_size + margin);
+	int pos_y = panel_score_height + tile.get_y() * (tile_size + margin);
+	
+	tile_shape.setSize(sf::Vector2f(tile_size, tile_size));
+    tile_shape.setPosition(pos_x, pos_y);
+    tile_shape.setOutlineThickness(2.f);
+    tile_shape.setOutlineColor(sf::Color(150, 150, 150));
+
+    tile_text.setFont(font);
+    tile_text.setCharacterSize(24);
+    tile_text.setFillColor(sf::Color::White);
+
+	update_visual();
 }
 
-sf::Color TileColors::getColor(int value)
+void RenderTile::update_visual()
 {
-	if (colorMap.find(value) != colorMap.end()) //Busca a chave value no mapa e o retorna. Retorna colorMap.end() se a chave não existir
-		return colorMap[value];
-	return sf::Color::Black; // preto setado como padrão
-};
+    int value = tile_ref.get_value();
+ 
+    tile_shape.setFillColor(color_ref.getColor(value));
+    tile_text.setString(std::to_string(value));
+	if (value == 0)
+		tile_text.setString("");
+
+    sf::FloatRect textBounds = tile_text.getLocalBounds();
+    tile_text.setOrigin(textBounds.left + textBounds.width / 2.f, textBounds.top + textBounds.height / 2.f);
+    tile_text.setPosition(tile_shape.getPosition().x + tile_shape.getSize().x / 2.f,
+                          tile_shape.getPosition().y + tile_shape.getSize().y / 2.f);
+}
 
 void RenderTile::draw(sf::RenderWindow& window)
 {
-    window.draw(tile);
-    if (value != 0) // Só desenha texto se não for vazio
-        window.draw(tileText);
+    window.draw(tile_shape);
+    window.draw(tile_text);
 }
-
-RenderTile::RenderTile(Board &board, TileColors colors, const sf::Font &font, int x, int y) //inicialziar font no programa principal e enviar
-{
-	float	margin_value = 10.f;
-	float	tile_size = 100.f;
-
-	this->value = board.grid_at(x, y).get_value();
-
-	//posição e tamanho:
-	tile.setSize(sf::Vector2f(100.f, 100.f));
-	tile.setPosition(x * (tile_size + margin_value) , y * (tile_size + margin_value));
-	
-	//cor do tile e estilização
-	tile.setFillColor(colors.getColor(value));
-	tile.setOutlineThickness(2.f);
-	tile.setOutlineColor(sf::Color(150, 150, 150));
-	
-	//configuração do texto
-	tileText.setFont(font);
-	tileText.setCharacterSize(24);
-	tileText.setString(std::to_string(value));
-	tileText.setFillColor(sf::Color::White);
-	
-	if (value == 0)
-		tileText.setString("");
-
-	// Ajusta a origem para o centro do texto
-	sf::FloatRect textBounds = tileText.getLocalBounds();
-	tileText.setOrigin(textBounds.left + textBounds.width/2.0f, textBounds.top + textBounds.height/2.0f);
-
-	// Posiciona no centro do tile
-	tileText.setPosition(tile.getPosition().x + tile.getSize().x/2,
-    tile.getPosition().y + tile.getSize().y/2);
-};

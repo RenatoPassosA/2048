@@ -32,7 +32,8 @@ class Board{
 		void	save_history();
 		bool	undo();
 		void	decrement_undo();
-
+		int		get_undo_counter();
+		void	new_game();
 
 		
 		

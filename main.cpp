@@ -8,16 +8,19 @@ int main()
 	// carrega o board para teste
 	Board board;
 	
-	int initial[4][4] = {
+	/*int initial[4][4] = {
 		{0, 2, 3, 4},
 		{5, 6, 7, 8},
 		{9, 10, 11, 12},
 		{13, 14, 15, 16}
 	};
 
-	load_board(board, initial);
+	load_board(board, initial);*/
 
-	// Rodar o programa enquanto a janela estiver aberta
+	RenderBoard init_board(board);
+	GameControl game_control;
+	
+	game_control.game_loop(board, init_board);
 
 
     return 0;

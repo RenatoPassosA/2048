@@ -6,25 +6,18 @@
 #include <SFML/Window.hpp>
 #include <unordered_map>
 
-class TileColors {
-	private:
-		std::unordered_map<int, sf::Color>	colorMap; //unordered_map é a mesma coisa que o dict
-	
-	public:
-		TileColors();
-		sf::Color	getColor(int value);
-};
-
 class RenderTile{
 	private:
-		int value;
-		sf::RectangleShape tile;
-		sf::Text tileText;
+		sf::RectangleShape		tile_shape; 
+		sf::Text				tile_text;
+		Tile					&tile_ref;
+		sf::Font				&font_ref;
+		TileColors				&color_ref;
 		
 	public:
-		RenderTile(Board &board, TileColors colors, const sf::Font &font, int x, int y);
-		void draw(sf::RenderWindow& window);
-		
+		RenderTile(Tile &tile, TileColors &colors, sf::Font &font);
+		void	draw(sf::RenderWindow& window);
+		void	update_visual();
 };
 
 #endif
