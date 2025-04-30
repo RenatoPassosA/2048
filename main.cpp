@@ -16,11 +16,12 @@ int main()
 	};
 
 	load_board(board, initial);*/
-
-	RenderBoard init_board(board);
-	GameControl game_control;
 	
-	game_control.game_loop(board, init_board);
+	RenderBoard rendered_board(board);
+	
+	GameControl game_control(board, rendered_board);
+	
+	game_control.game_loop();
 
 
     return 0;

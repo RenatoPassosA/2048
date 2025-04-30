@@ -92,6 +92,7 @@ void	Board::set_new_tile_after_movement()
 
 Board::Board()
 {
+	std::srand(static_cast<unsigned>(time(nullptr)));
 	score = 0;
 	undo_count = 5;
 

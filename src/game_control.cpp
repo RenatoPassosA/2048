@@ -2,55 +2,54 @@
 #include "game_control.hpp"
 #include "../graphics/render_board.hpp"
 
-GameControl::GameControl()
+GameControl::GameControl(Board &board, RenderBoard &board_render)
+	:board_ref(board), rendered_board_ref(board_render)
 {
 	window.create(sf::VideoMode(500, 600), "2048", sf::Style::Default);
 }
 
-void GameControl::game_loop(Board &board, RenderBoard &board_render)
+void GameControl::game_loop()
 {
+	board_ref.print_table();
+
 	while (window.isOpen())
     {
         // Verificar todos os eventos da janela que ocorreram desde a última iteração
         while (window.pollEvent(event))
-            check_event_type(event, board);
-		
-		board_render.update(board);
-		
+            check_event_type(event);
+		rendered_board_ref.update_all_tiles();
 		window.clear(sf::Color(250, 248, 239)); // Cor de fundo do 2048
-		
-        for (RenderTile &tile : board_render.get_tiles()) {
-            tile.draw(this->getWindow());
-        }
-		
-		board_render.draw_score(window, board);
-		board_render.draw_new_game(window);
+		rendered_board_ref.draw_all(window);
 		window.display();
     }
 }
 
-void	GameControl::check_event_type(sf::Event event, Board &board)
+void	GameControl::check_event_type(sf::Event event)
 {
 	if (event.type == sf::Event::KeyPressed)
 	{
 		if (event.key.code == sf::Keyboard::Up)
-			board.handle_direction(Direction::up);
+			board_ref.handle_direction(Direction::up);
 		else if (event.key.code == sf::Keyboard::Down)
-			board.handle_direction(Direction::down);
+			board_ref.handle_direction(Direction::down);
 		else if (event.key.code == sf::Keyboard::Left)
-			board.handle_direction(Direction::left);
+			board_ref.handle_direction(Direction::left);
 		else if (event.key.code == sf::Keyboard::Right)
-			board.handle_direction(Direction::right);
+			board_ref.handle_direction(Direction::right);
 	}
 	else if (event.type == sf::Event::Closed)
+	{
 		window.close();
+	}
+
+	/*std::cout << "antes do mov: " <<std::endl;
+	board_ref.print_table();
+	
+	std::cout << "depois do mov: " <<std::endl;
+	board_ref.print_table();*/
 }
 
 sf::RenderWindow &GameControl::getWindow()
 {
     return window;
 }
-
-
-
-

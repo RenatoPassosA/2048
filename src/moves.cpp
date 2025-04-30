@@ -244,4 +244,5 @@ void	move(Board &board, Direction dir)
 	else if (dir == Direction::up)
 		move_up(board);
 	board.set_new_tile_after_movement();
+	
 } 

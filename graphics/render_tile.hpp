@@ -2,9 +2,10 @@
 # define RENDERER_HPP
 
 #include "../src/board.hpp"
+#include "tile_colors.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-#include <unordered_map>
+
 
 class RenderTile{
 	private:

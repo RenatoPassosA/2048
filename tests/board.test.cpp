@@ -197,13 +197,13 @@ TEST(move_left, complex_move_left_with_merge)
 	Board board;
 
 	int initial[4][4] = {
-		{4, 4, 0, 0},
+		{2, 2, 2, 0},
 		{0, 2, 2, 2},
 		{0, 0, 2, 2},
 		{2, 2, 2, 2}
 	};
 	int expected[4][4] = {
-		{8, 0, 0, 0},
+		{4, 2, 0, 0},
 		{4, 2, 0, 0},
 		{4, 0, 0, 0},
 		{4, 4, 0, 0}

@@ -10,6 +10,7 @@ Classe render tile:
 RenderTile::RenderTile(Tile &tile, TileColors &colors, sf::Font &font)
 	: tile_ref(tile), font_ref(font), color_ref(colors)
 {
+	
 	int tile_size = 100;
 	int margin = 10;
 	int panel_score_height = 100;
@@ -18,8 +19,8 @@ RenderTile::RenderTile(Tile &tile, TileColors &colors, sf::Font &font)
 	int board_width = (tile_size * 4) + (margin * 3);
 	int	out_margin = (window_width - board_width) / 2;
 
-	int pos_x = out_margin + tile.get_x() * (tile_size + margin);
-	int pos_y = panel_score_height + tile.get_y() * (tile_size + margin);
+	int pos_x = out_margin + tile.get_y() * (tile_size + margin);
+	int pos_y = panel_score_height + tile.get_x() * (tile_size + margin);
 	
 	tile_shape.setSize(sf::Vector2f(tile_size, tile_size));
     tile_shape.setPosition(pos_x, pos_y);
@@ -36,6 +37,8 @@ RenderTile::RenderTile(Tile &tile, TileColors &colors, sf::Font &font)
 void RenderTile::update_visual()
 {
     int value = tile_ref.get_value();
+
+	//std::cout << "Value:" << value << std::endl;
  
     tile_shape.setFillColor(color_ref.getColor(value));
     tile_text.setString(std::to_string(value));

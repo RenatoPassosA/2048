@@ -5,32 +5,31 @@
 #include <vector>
 #include <iostream>
 
-class TileColors {
-	private:
-		std::unordered_map<int, sf::Color>	colorMap; //unordered_map é a mesma coisa que o dict
-	
-	public:
-		TileColors();
-		sf::Color	getColor(int value);
-};
+
+
 
 class RenderBoard
 {
 	private:
+		Board &board_ref;
+		//sf::RenderWindow	&window_ref;
 		std::vector<RenderTile> tiles_renderizados;
+
 		TileColors colors;
 		sf::Font font;
-		sf::RectangleShape background_panel;
-		sf::Text score_val_text;
+
+		/*sf::RectangleShape background_panel;
+		sf::Text score_val_panel_text;
 		sf::RectangleShape new_game_button;
-		sf::Text new_game_text;
+		sf::Text new_game_button_text;*/
 
 	public:
 		RenderBoard(Board &board);
 		std::vector<RenderTile>	&get_tiles();
-		void					draw_score(sf::RenderWindow& window, Board &board);
-		void					draw_new_game(sf::RenderWindow& window);
-		void					update(Board &board);
+		/*void					draw_score_panel(sf::RenderWindow& window, Board &board);
+		void					draw_new_game(sf::RenderWindow& window);*/
+		void					draw_all(sf::RenderWindow &window_ref);
+		void					update_all_tiles();
 		
 		
 		

@@ -8,14 +8,16 @@
 class GameControl
 {
 	private:
-		sf::RenderWindow window;
-		sf::Event event;
+		sf::RenderWindow	window;
+		sf::Event			event;
+		Board				&board_ref;
+		RenderBoard			&rendered_board_ref;
 
 	public:
-		GameControl();
-		void				game_loop(Board &board, RenderBoard &board_render);
+		GameControl(Board &board, RenderBoard &rendered_board);
+		void				game_loop();
 		sf::RenderWindow	&getWindow();
-		void				check_event_type(sf::Event event, Board &board);
+		void				check_event_type(sf::Event event);
 };
 
 #endif
