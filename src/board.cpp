@@ -112,7 +112,7 @@ Board::Board()
 	set_initial_tiles();
 }
 
-static bool check_up(Board board, int x, int y)
+bool check_up(Board board, int x, int y)
 {
 	int up = x - 1;
 	if (up < 0)
@@ -124,7 +124,7 @@ static bool check_up(Board board, int x, int y)
 	return (up_value == current_value);
 }
 
-static bool check_down(Board board, int x, int y)
+bool check_down(Board board, int x, int y)
 {
 	int down = x + 1;
 	if (down > 3)
@@ -136,7 +136,7 @@ static bool check_down(Board board, int x, int y)
 	return (down_value == current_value);
 }
 
-static bool check_left(Board board, int x, int y)
+bool check_left(Board board, int x, int y)
 {
 	int left = y - 1;
 	if (left < 0)
@@ -148,7 +148,7 @@ static bool check_left(Board board, int x, int y)
 	return (left_value == current_value);
 }
 
-static bool check_right(Board board, int x, int y)
+bool check_right(Board board, int x, int y)
 {
 	int right = y + 1;
 	if (right > 3)

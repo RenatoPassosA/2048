@@ -16,7 +16,7 @@ class GameControl
 	public:
 		GameControl(Board &board, RenderBoard &rendered_board);
 		void				game_loop();
-		sf::RenderWindow	&getWindow();
+		sf::RenderWindow	&get_window();
 		void				check_event_type(sf::Event event);
 };
 

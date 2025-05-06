@@ -2,6 +2,7 @@
 #define MOVES_HPP
 
 #include "board.hpp"
+#include "tile.hpp"
 
 void move(Board& board, Direction dir);
 

@@ -5,20 +5,19 @@
 GameControl::GameControl(Board &board, RenderBoard &board_render)
 	:board_ref(board), rendered_board_ref(board_render)
 {
-	window.create(sf::VideoMode(500, 600), "2048", sf::Style::Default);
+	window.create(sf::VideoMode(500, 600), "2048", sf::Style::Titlebar | sf::Style::Close);
 }
 
 void GameControl::game_loop()
 {
-	board_ref.print_table();
-
+	
 	while (window.isOpen())
     {
-        // Verificar todos os eventos da janela que ocorreram desde a última iteração
         while (window.pollEvent(event))
             check_event_type(event);
 		rendered_board_ref.update_all_tiles();
-		window.clear(sf::Color(250, 248, 239)); // Cor de fundo do 2048
+		rendered_board_ref.update_score(window);
+		window.clear(sf::Color(250, 248, 239));
 		rendered_board_ref.draw_all(window);
 		window.display();
     }
@@ -42,14 +41,9 @@ void	GameControl::check_event_type(sf::Event event)
 		window.close();
 	}
 
-	/*std::cout << "antes do mov: " <<std::endl;
-	board_ref.print_table();
-	
-	std::cout << "depois do mov: " <<std::endl;
-	board_ref.print_table();*/
 }
 
-sf::RenderWindow &GameControl::getWindow()
+sf::RenderWindow &GameControl::get_window()
 {
     return window;
 }

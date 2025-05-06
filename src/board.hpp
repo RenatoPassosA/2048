@@ -40,4 +40,9 @@ class Board{
 		void	print_table();
 };
 
+bool check_right(Board board, int x, int y);
+bool check_left(Board board, int x, int y);
+bool check_down(Board board, int x, int y);
+bool check_up(Board board, int x, int y);
+
 #endif
