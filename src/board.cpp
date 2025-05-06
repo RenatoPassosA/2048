@@ -201,6 +201,13 @@ void	Board::save_history()
 	}
 }
 
+void	Board::delete_history()
+{
+	history.clear();
+}
+
+
+
 bool	Board::undo()
 {
 	int x = 0;
@@ -250,9 +257,19 @@ int Board::get_undo_counter()
 	return (this->undo_count);
 }
 
+void		Board::reset_undo_counter()
+{
+	this->undo_count = 0;
+};
+
 void Board::decrement_undo()
 {
 	this->undo_count--;
+}
+
+bool Board::has_history() const
+{
+    return !history.empty();
 }
 
 

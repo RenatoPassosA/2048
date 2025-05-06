@@ -19,17 +19,24 @@ class RenderBoard
 
 		sf::RectangleShape background_score_panel;
 		sf::Text score_val_panel_text;
-		/*sf::RectangleShape new_game_button;
-		sf::Text new_game_button_text;*/
+		sf::RectangleShape new_game_button;
+		sf::Text new_game_button_text;
+		sf::RectangleShape undo_button;
+		sf::Text undo_button_text;
 
 	public:
 		RenderBoard(Board &board);
-		std::vector<RenderTile>	&get_tiles();
-		void					set_score_panel(sf::RenderWindow &window);
-		/*void					draw_new_game(sf::RenderWindow& window);*/
-		void					draw_all(sf::RenderWindow &window);
-		void					update_all_tiles();
-		void					update_score(sf::RenderWindow &window);
+		std::vector<RenderTile>			&get_tiles();
+		void							set_score_panel(sf::RenderWindow &window);
+		void 							set_new_game_button(sf::RenderWindow &window);
+		void							set_undo_button(sf::RenderWindow& window);
+		void							draw_all(sf::RenderWindow &window);
+		void							update_all_tiles();
+		void							update_score(sf::RenderWindow &window);
+		
+		const sf::RectangleShape		&get_new_game_button() const;
+		const sf::RectangleShape		&get_undo_button() const;
+
 		
 		
 		

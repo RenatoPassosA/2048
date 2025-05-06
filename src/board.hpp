@@ -30,10 +30,13 @@ class Board{
 		void	update_score(int val);
 		int		get_score();
 		void	save_history();
+		void	delete_history();
 		bool	undo();
 		void	decrement_undo();
 		int		get_undo_counter();
+		void	reset_undo_counter();
 		void	new_game();
+		bool 	has_history() const;
 
 		
 		

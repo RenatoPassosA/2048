@@ -16,15 +16,20 @@ std::vector<RenderTile> &RenderBoard::get_tiles()
 void RenderBoard::draw_all(sf::RenderWindow	&window)
 {
 	set_score_panel(window);
+	set_new_game_button(window);
+	set_undo_button(window);
 
 	for (auto &tile : get_tiles())
 		tile.draw(window);
 
 
     window.draw(background_score_panel);
-
-    
     window.draw(score_val_panel_text);
+	window.draw(new_game_button);
+    window.draw(new_game_button_text);
+	window.draw(undo_button);
+    window.draw(undo_button_text);
+
 };
 
 void RenderBoard::update_all_tiles()
@@ -61,7 +66,6 @@ RenderBoard::RenderBoard(Board &board)
 		while (y < 4)
 		{
 			tiles_renderizados.emplace_back(board.grid_at(x, y), colors, font);
-			//std::cout << "Tile Position for (" << board.grid_at(x, y).get_x() << ", " << board.grid_at(x, y).get_y() << "): value:" << board.grid_at(x, y).get_value() << std::endl; 
 			y++;
 		}
 		y = 0;
@@ -73,31 +77,91 @@ void RenderBoard::set_score_panel(sf::RenderWindow &window)
 {
     std::string score = std::to_string(board_ref.get_score());
 
-    // Configurar o texto para o score
     score_val_panel_text.setFont(font);
-    score_val_panel_text.setCharacterSize(30); // Tamanho da fonte para o score
-    score_val_panel_text.setString(score); // Texto com o score
+    score_val_panel_text.setCharacterSize(30);
+    score_val_panel_text.setString(score);
     score_val_panel_text.setFillColor(sf::Color::Black);
 
-    // Calcular o tamanho e a posição do retângulo de fundo
     float window_width = window.getSize().x;
-    float panel_width = window_width - 100.f; // Painel com largura fixa (margem de 50px em cada lado)
-    float panel_height = 75.f; // Altura do painel (ajuste conforme necessário)
-    float posY = 10.f; // Posição Y do retângulo (ajuste conforme necessário)
+    float panel_width = window_width - 100.f;
+    float panel_height = 75.f;
+    float posY = 10.f;
+    float posX = 50.f;
 
-    // Calcular a posição X para centralizar o painel
-    float posX = 50.f; // Margin left de 50px (ajuste conforme necessário)
-
-    // Configurar o retângulo de fundo
     background_score_panel.setSize(sf::Vector2f(panel_width, panel_height));
-    background_score_panel.setFillColor(sf::Color::White); // Cor do painel de fundo
-    background_score_panel.setPosition(posX, posY); // Posicionar o painel na parte superior da tela
+    background_score_panel.setFillColor(sf::Color::White);
+    background_score_panel.setPosition(posX, posY);
 	background_score_panel.setOutlineThickness(2.f);
     background_score_panel.setOutlineColor(sf::Color(150, 150, 150));
 
-    // Ajustar a posição do texto para centralizá-lo dentro do retângulo
 	sf::FloatRect textBounds = score_val_panel_text.getLocalBounds();
     score_val_panel_text.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
-    score_val_panel_text.setPosition(posX + panel_width / 2, posY + panel_height / 2); // Centralizar o texto dentro do retângulo
-
+    score_val_panel_text.setPosition(posX + panel_width / 2, posY + panel_height / 2);
 }
+
+void RenderBoard::set_new_game_button(sf::RenderWindow &window)
+{
+    new_game_button_text.setFont(font);
+    new_game_button_text.setCharacterSize(10);
+    new_game_button_text.setString("New  Game");
+    new_game_button_text.setFillColor(sf::Color::Black);
+
+    float window_width = window.getSize().x;
+    float window_height = window.getSize().y;
+    float button_width = 100.f;
+    float button_height = 50.f;
+    float bottom_margin = 10.f;
+	float right_margin = 100.f;
+
+	float posX = window_width - button_width - right_margin;
+	float posY = window_height - button_height - bottom_margin;
+
+    new_game_button.setSize(sf::Vector2f(button_width, button_height));
+    new_game_button.setFillColor(sf::Color::White);
+    new_game_button.setOutlineThickness(2.f);
+    new_game_button.setOutlineColor(sf::Color(150, 150, 150));
+    new_game_button.setPosition(posX, posY);
+
+    sf::FloatRect textBounds = new_game_button_text.getLocalBounds();
+    new_game_button_text.setOrigin(textBounds.left + textBounds.width / 2.0f,
+                                   textBounds.top + textBounds.height / 2.0f);
+    new_game_button_text.setPosition(posX + button_width / 2.f, posY + button_height / 2.f);
+}
+
+const sf::RectangleShape &RenderBoard::get_new_game_button() const
+{
+    return new_game_button;
+}
+
+void	RenderBoard::set_undo_button(sf::RenderWindow& window)
+{
+	undo_button_text.setFont(font);
+    undo_button_text.setCharacterSize(10);
+    undo_button_text.setString("Desfazer");
+    undo_button_text.setFillColor(sf::Color::Black);
+
+    float window_height = window.getSize().y;
+    float button_width = 100.f;
+    float button_height = 50.f;
+    float bottom_margin = 10.f;
+
+	float posX = button_width;
+	float posY = window_height - button_height - bottom_margin;
+
+    undo_button.setSize(sf::Vector2f(button_width, button_height));
+    undo_button.setFillColor(sf::Color::White);
+    undo_button.setOutlineThickness(2.f);
+    undo_button.setOutlineColor(sf::Color(150, 150, 150));
+    undo_button.setPosition(posX, posY);
+
+    sf::FloatRect textBounds = undo_button_text.getLocalBounds();
+    undo_button_text.setOrigin(textBounds.left + textBounds.width / 2.0f,
+                                   textBounds.top + textBounds.height / 2.0f);
+    undo_button_text.setPosition(posX + button_width / 2.f, posY + button_height / 2.f);
+};
+
+const sf::RectangleShape &RenderBoard::get_undo_button() const
+{
+    return undo_button;
+}
+

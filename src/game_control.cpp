@@ -25,6 +25,8 @@ void GameControl::game_loop()
 
 void	GameControl::check_event_type(sf::Event event)
 {
+	
+
 	if (event.type == sf::Event::KeyPressed)
 	{
 		if (event.key.code == sf::Keyboard::Up)
@@ -40,7 +42,24 @@ void	GameControl::check_event_type(sf::Event event)
 	{
 		window.close();
 	}
+	else if (event.type == sf::Event::MouseButtonPressed &&	event.mouseButton.button == sf::Mouse::Left)
+	{
+		sf::Vector2f mousePos = static_cast<sf::Vector2f>(sf::Mouse::getPosition(window));
 
+		if (rendered_board_ref.get_new_game_button().getGlobalBounds().contains(mousePos))
+		{
+			window.clear();
+			board_ref.reset_undo_counter();
+			board_ref.delete_history();
+			board_ref.new_game();
+		}
+		if (rendered_board_ref.get_undo_button().getGlobalBounds().contains(mousePos))
+		{
+			if (!board_ref.has_history())
+				return ;
+			board_ref.undo();
+		}
+	}
 }
 
 sf::RenderWindow &GameControl::get_window()
