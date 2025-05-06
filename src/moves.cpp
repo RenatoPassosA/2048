@@ -1,6 +1,4 @@
 #include "moves.hpp"
-#include "board.hpp"
-#include "tile.hpp"
 
 static void	move_in_row_left(Board &board, int x)
 {
@@ -232,9 +230,42 @@ void	move_up(Board &board)
 	}
 }
 
-void	move(Board &board, Direction dir)
+static bool	can_move_to_dir(Board &board, Direction dir)
 {
+	int	x = 0;
+	int	y = 0;
+	bool (*func)(Board&, int, int);
+
+	if (dir == Direction::left)
+		func = check_left;
+	else if (dir == Direction::right)
+		func = check_right;
+	else if (dir == Direction::up)
+		func = check_up;
+	else if (dir == Direction::down)
+		func = check_down;
+
+	while (x < 4)
+	{
+		while (y < 4)
+		{
+			if (board.grid_at(x,y).get_value() != 0 && func(board, x, y))
+				return(true);
+			y++;
+		}
+		y = 0;
+		x++;
+	}
+	return(false);
+}
+
+void move(Board &board, Direction dir)
+{
+	if (!can_move_to_dir(board, dir))
+		return;
+
 	board.save_history();
+
 	if (dir == Direction::left)
 		move_left(board);
 	else if (dir == Direction::right)
@@ -243,6 +274,6 @@ void	move(Board &board, Direction dir)
 		move_down(board);
 	else if (dir == Direction::up)
 		move_up(board);
+
 	board.set_new_tile_after_movement();
-	
-} 
+}

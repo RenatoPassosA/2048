@@ -112,7 +112,7 @@ Board::Board()
 	set_initial_tiles();
 }
 
-bool check_up(Board board, int x, int y)
+bool check_up(Board &board, int x, int y)
 {
 	int up = x - 1;
 	if (up < 0)
@@ -121,10 +121,10 @@ bool check_up(Board board, int x, int y)
 	int up_value = board.grid_at(up, y).get_value();
 	int current_value = board.grid_at(x, y).get_value();
 	
-	return (up_value == current_value);
+	return (up_value == 0 || up_value == current_value);
 }
 
-bool check_down(Board board, int x, int y)
+bool check_down(Board &board, int x, int y)
 {
 	int down = x + 1;
 	if (down > 3)
@@ -133,10 +133,10 @@ bool check_down(Board board, int x, int y)
 	int down_value = board.grid_at(down, y).get_value();
 	int current_value = board.grid_at(x, y).get_value();
 
-	return (down_value == current_value);
+	return (down_value == 0 || down_value == current_value);
 }
 
-bool check_left(Board board, int x, int y)
+bool check_left(Board &board, int x, int y)
 {
 	int left = y - 1;
 	if (left < 0)
@@ -145,10 +145,10 @@ bool check_left(Board board, int x, int y)
 	int left_value = board.grid_at(x, left).get_value();
 	int current_value = board.grid_at(x, y).get_value();
 	
-	return (left_value == current_value);
+	return (left_value == 0 || left_value == current_value);
 }
 
-bool check_right(Board board, int x, int y)
+bool check_right(Board &board, int x, int y)
 {
 	int right = y + 1;
 	if (right > 3)
@@ -157,7 +157,7 @@ bool check_right(Board board, int x, int y)
 	int right_value = board.grid_at(x, right).get_value();
 	int current_value = board.grid_at(x, y).get_value();
 	
-	return (right_value == current_value);
+	return (right_value == 0 || right_value == current_value);
 }
 
 static bool check_neighbors(Board &board, int x, int y)
@@ -168,7 +168,7 @@ static bool check_neighbors(Board &board, int x, int y)
 	check_right(board, x, y));
 }
 
-bool	Board::can_move()
+bool	Board::check_end_game()
 {
 	int		x = 0;
 	int		y = 0;

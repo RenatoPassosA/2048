@@ -26,7 +26,7 @@ class Board{
 		void	set_initial_tiles();
 		void	set_new_tile_after_movement();
 		void	handle_direction(Direction dir);
-		bool	can_move();
+		bool	check_end_game();
 		void	update_score(int val);
 		int		get_score();
 		void	save_history();
@@ -40,9 +40,9 @@ class Board{
 		void	print_table();
 };
 
-bool check_right(Board board, int x, int y);
-bool check_left(Board board, int x, int y);
-bool check_down(Board board, int x, int y);
-bool check_up(Board board, int x, int y);
+bool check_right(Board &board, int x, int y);
+bool check_left(Board &board, int x, int y);
+bool check_down(Board &board, int x, int y);
+bool check_up(Board &board, int x, int y);
 
 #endif
