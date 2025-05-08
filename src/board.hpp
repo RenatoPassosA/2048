@@ -4,6 +4,7 @@
 #include <iostream>
 #include <random>
 #include "tile.hpp"
+#include "board_state.hpp"
 
 enum class Direction {
     left,
@@ -14,10 +15,10 @@ enum class Direction {
 
 class Board{
 	private:
-		Tile				grid[4][4];
-		int					score;
-		std::vector<Board>	history;
-		int					undo_count;
+		Tile						grid[4][4];
+		int							score;
+		std::vector<BoardState>		history;
+		int							undo_count;
 	
 	public:
 		Board();
@@ -31,6 +32,7 @@ class Board{
 		bool	check_end_game();
 
 		int		get_score();
+		void	set_score(int previous_score);
 		void	update_score(int val);
 		
 		bool	undo();

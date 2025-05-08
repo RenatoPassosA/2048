@@ -4,7 +4,7 @@ aqui eu dividi entre função que "arrumam" os tiles na direção indicada, para
 e tambem as funções que fazem o merge nos tiles, somando so valores iguais
 e ainda há a função que checa se é possivel mover para alguma direção
 */
-
+/*
 #include "moves.hpp"
 
 static void	move_in_row_left(Board &board, int x)
@@ -283,4 +283,4 @@ void move(Board &board, Direction dir)
 		move_up(board);
 
 	board.set_new_tile_after_movement();
-}
+}*/

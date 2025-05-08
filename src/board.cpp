@@ -7,6 +7,7 @@ lida com a criação de tiles, movimentação do board, placar, histórico, desf
 
 #include "board.hpp"
 #include "moves.hpp"
+#include "direction_factory.hpp"
 
 Board::Board()
 {
@@ -107,7 +108,16 @@ void	Board::set_new_tile_after_movement()
 
 void Board::handle_direction(Direction dir)
 {
-    move(*this, dir);
+	interface_move_strategy* strategy = DirectionFactory::get_move(dir);
+	if (!strategy->can_move(*this))
+	{
+		delete strategy;
+		return ;
+	}
+	save_history();
+    strategy->move(*this);
+    delete strategy;
+	set_new_tile_after_movement();
 }
 
 bool check_up(Board &board, int x, int y)
@@ -196,6 +206,11 @@ int Board::get_score()
 	return (this->score);
 }
 
+void	Board::set_score(int previous_score)
+{
+	this->score = previous_score;
+};
+
 void Board::update_score(int val)
 {
 	this->score += val;
@@ -205,24 +220,23 @@ bool	Board::undo()
 {
 	int x = 0;
 	int y = 0;
-	
-	int history_value = 0;
 
-	if (this->undo_count == 0)
-		return (false);
+	if (this->undo_count == 0 || history.empty())
+		return false;
 	this->decrement_undo();
+	BoardState previous = history.front();
+	history.erase(history.begin());
 	while (x < 4)
 	{
 		while (y < 4)
 		{
-			history_value = history.at(0).grid_at(x, y).get_value();
-			this->grid_at(x, y).set_value(history_value);
+			this->grid_at(x, y).set_value(previous.grid[x][y]);
 			y++;
 		}
 		y = 0;
 		x++;
 	}
-	history.erase(history.begin());
+	this->set_score(previous.score);
 	return (true);
 }
 
@@ -243,10 +257,25 @@ void		Board::reset_undo_counter()
 
 void	Board::save_history()
 {
-	history.insert(history.begin(), *this);
-	if (history.size() > 5) {
-		history.pop_back();
+	BoardState state;
+	int 		x = 0;
+	int 		y = 0;
+
+	while (x < 4)
+	{
+		while (y < 4)
+		{
+			state.grid[x][y] = grid_at(x, y).get_value();
+			y++;
+		}
+		y = 0;
+		x++;
 	}
+	state.score = this->score;
+
+	history.insert(history.begin(), state);
+	if (history.size() > 5)
+		history.pop_back();
 }
 
 void	Board::delete_history()
