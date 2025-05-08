@@ -1,3 +1,6 @@
+/*
+essa classe é responsável por definir a cor de cada tile conforme o valor dele*/
+
 #include "tile_colors.hpp"
 
 TileColors::TileColors()

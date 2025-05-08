@@ -1146,7 +1146,6 @@ TEST(undo, calling_undo_more_than_5_times)
 TEST(new_game, call_new_game_and_check_values)
 {
 	Board board;
-	bool arr[5];
 	
 	int initial[4][4] = {
 		{2, 2, 4, 4},

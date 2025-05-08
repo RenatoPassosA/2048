@@ -1,3 +1,10 @@
+/*
+essas funções são responsáveis por toda a lógica da movimentação do game.
+aqui eu dividi entre função que "arrumam" os tiles na direção indicada, para que os tiles se movam para os buracos existentes
+e tambem as funções que fazem o merge nos tiles, somando so valores iguais
+e ainda há a função que checa se é possivel mover para alguma direção
+*/
+
 #include "moves.hpp"
 
 static void	move_in_row_left(Board &board, int x)

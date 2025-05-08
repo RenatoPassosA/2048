@@ -1,59 +1,12 @@
 #include "render_board.hpp"
 
 /*
-Gerenciar todos os RenderTile de uma vez;
+essa classe gerencia todos os tile de uma vez.
 
-Atualizar e desenhar todos eles em um loop (sem ter esse código disperso no main);
+atualiza e desenha todos eles em um loop.
 
-Centralizar o controle da renderização da parte gráfica do jogo.
+centralizar o controle da renderização da parte gráfica do jogo.
 */
-
-std::vector<RenderTile> &RenderBoard::get_tiles()
-{
-	return (tiles_renderizados);
-}
-
-void RenderBoard::draw_all(sf::RenderWindow	&window)
-{
-	set_score_panel(window);
-	set_new_game_button(window);
-	set_undo_button(window);
-
-	for (auto &tile : get_tiles())
-		tile.draw(window);
-	
-	if (board_ref.get_undo_counter() == 0)
-		change_undo_color();
-
-    window.draw(background_score_panel);
-    window.draw(score_val_panel_text);
-	window.draw(new_game_button);
-    window.draw(new_game_button_text);
-	window.draw(undo_button);
-    window.draw(undo_button_text);
-
-};
-
-void RenderBoard::update_all_tiles()
-{
-	for (auto &tile: tiles_renderizados)
-		tile.update_visual();
-};
-
-void RenderBoard::update_score(sf::RenderWindow &window)
-{
-	float window_width = window.getSize().x;
-    float panel_width = window_width - 100.f;
-    float panel_height = 75.f;
-    float posY = 10.f;
-	float posX = 50.f;
-
-	int value = board_ref.get_score();
-	score_val_panel_text.setString(std::to_string(value));
-	sf::FloatRect textBounds = score_val_panel_text.getLocalBounds();
-    score_val_panel_text.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
-    score_val_panel_text.setPosition(posX + panel_width / 2, posY + panel_height / 2);
-};
 
 RenderBoard::RenderBoard(Board &board)
 	: board_ref(board)
@@ -73,6 +26,11 @@ RenderBoard::RenderBoard(Board &board)
 		y = 0;
 		x++;
 	}
+}
+
+std::vector<RenderTile> &RenderBoard::get_tiles()
+{
+	return (tiles_renderizados);
 }
 
 void RenderBoard::set_score_panel(sf::RenderWindow &window)
@@ -167,11 +125,6 @@ const sf::RectangleShape &RenderBoard::get_undo_button() const
     return undo_button;
 }
 
-void	RenderBoard::change_undo_color()
-{
-	undo_button_text.setFillColor(sf::Color(128, 128, 128));
-};
-
 void RenderBoard::set_game_over(sf::RenderWindow& window)
 {
     float posX = window.getSize().x / 2.f;
@@ -190,4 +143,53 @@ void RenderBoard::set_game_over(sf::RenderWindow& window)
     game_over_text.setPosition(posX, posY);
 	window.draw(game_over_text);
 };
+
+void RenderBoard::draw_all(sf::RenderWindow	&window)
+{
+	set_score_panel(window);
+	set_new_game_button(window);
+	set_undo_button(window);
+
+	for (auto &tile : get_tiles())
+		tile.draw(window);
+	
+	if (board_ref.get_undo_counter() == 0)
+		change_undo_color();
+
+    window.draw(background_score_panel);
+    window.draw(score_val_panel_text);
+	window.draw(new_game_button);
+    window.draw(new_game_button_text);
+	window.draw(undo_button);
+    window.draw(undo_button_text);
+
+};
+
+void RenderBoard::update_all_tiles()
+{
+	for (auto &tile: tiles_renderizados)
+		tile.update_visual();
+};
+
+void RenderBoard::update_score(sf::RenderWindow &window)
+{
+	float window_width = window.getSize().x;
+    float panel_width = window_width - 100.f;
+    float panel_height = 75.f;
+    float posY = 10.f;
+	float posX = 50.f;
+
+	int value = board_ref.get_score();
+	score_val_panel_text.setString(std::to_string(value));
+	sf::FloatRect textBounds = score_val_panel_text.getLocalBounds();
+    score_val_panel_text.setOrigin(textBounds.left + textBounds.width / 2.0f, textBounds.top + textBounds.height / 2.0f);
+    score_val_panel_text.setPosition(posX + panel_width / 2, posY + panel_height / 2);
+};
+
+void	RenderBoard::change_undo_color()
+{
+	undo_button_text.setFillColor(sf::Color(128, 128, 128));
+};
+
+
 

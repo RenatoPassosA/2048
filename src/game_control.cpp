@@ -25,10 +25,13 @@ void GameControl::game_loop()
     }
 }
 
+sf::RenderWindow &GameControl::get_window()
+{
+    return window;
+}
+
 void	GameControl::check_event_type(sf::Event event)
 {
-	
-
 	if (event.type == sf::Event::KeyPressed)
 	{
 		if (event.key.code == sf::Keyboard::Up)
@@ -62,9 +65,4 @@ void	GameControl::check_event_type(sf::Event event)
 			board_ref.undo();
 		}
 	}
-}
-
-sf::RenderWindow &GameControl::get_window()
-{
-    return window;
 }

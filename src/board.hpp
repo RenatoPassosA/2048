@@ -43,12 +43,6 @@ class Board{
 		void	save_history();
 		void	delete_history();
 		bool 	has_history() const;
-
-		
-
-		
-		
-		void	print_table();
 };
 
 bool check_right(Board &board, int x, int y);

@@ -31,19 +31,14 @@ class RenderBoard
 		std::vector<RenderTile>			&get_tiles();
 		void							set_score_panel(sf::RenderWindow &window);
 		void 							set_new_game_button(sf::RenderWindow &window);
+		const sf::RectangleShape		&get_new_game_button() const;
 		void							set_undo_button(sf::RenderWindow& window);
+		const sf::RectangleShape		&get_undo_button() const;
+		void							set_game_over(sf::RenderWindow &window);
 		void							draw_all(sf::RenderWindow &window);
 		void							update_all_tiles();
 		void							update_score(sf::RenderWindow &window);
-		void							set_game_over(sf::RenderWindow &window);
-
-		void							change_undo_color();
-		const sf::RectangleShape		&get_new_game_button() const;
-		const sf::RectangleShape		&get_undo_button() const;
-
-		
-		
-		
+		void							change_undo_color();	
 };
 
 
