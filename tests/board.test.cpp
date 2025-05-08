@@ -842,7 +842,7 @@ TEST(update_score, score_increases_correctly_after_move_left)
 }
 
 //TEST checking game over
-TEST(can_move, board_with_possible_moves)
+TEST(check_end_game, board_with_possible_moves)
 {
 	Board board;
 	
@@ -855,10 +855,10 @@ TEST(can_move, board_with_possible_moves)
 
 	load_board(board, initial);
 
-	EXPECT_TRUE(board.can_move());
+	EXPECT_TRUE(board.check_end_game());
 }
 
-TEST(can_move, board_with_no_possible_moves)
+TEST(check_end_game, board_with_no_possible_moves)
 {
 	Board board;
 	
@@ -871,10 +871,10 @@ TEST(can_move, board_with_no_possible_moves)
 
 	load_board(board, initial);
 
-	EXPECT_FALSE(board.can_move());
+	EXPECT_FALSE(board.check_end_game());
 }
 
-TEST(can_move, board_with_possible_col_merge)
+TEST(check_end_game, board_with_possible_col_merge)
 {
 	Board board;
 	
@@ -887,10 +887,10 @@ TEST(can_move, board_with_possible_col_merge)
 
 	load_board(board, initial);
 
-	EXPECT_TRUE(board.can_move());
+	EXPECT_TRUE(board.check_end_game());
 }
 
-TEST(can_move, board_with_possible_row_merge)
+TEST(check_end_game, board_with_possible_row_merge)
 {
 	Board board;
 	
@@ -903,10 +903,10 @@ TEST(can_move, board_with_possible_row_merge)
 
 	load_board(board, initial);
 
-	EXPECT_TRUE(board.can_move());
+	EXPECT_TRUE(board.check_end_game());
 }
 
-TEST(can_move, board_with_no_possible_merge)
+TEST(check_end_game, board_with_no_possible_merge)
 {
 	Board board;
 	
@@ -919,7 +919,7 @@ TEST(can_move, board_with_no_possible_merge)
 
 	load_board(board, initial);
 
-	EXPECT_FALSE(board.can_move());
+	EXPECT_FALSE(board.check_end_game());
 }
 
 //TEST undo

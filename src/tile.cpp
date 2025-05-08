@@ -1,3 +1,7 @@
+/*
+classe tile:
+guarda as informações de cada tile individual
+*/
 #include "tile.hpp"
 
 Tile::Tile() {

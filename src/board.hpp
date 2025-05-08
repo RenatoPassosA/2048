@@ -25,18 +25,26 @@ class Board{
 		Tile	set_random_tile();
 		void	set_initial_tiles();
 		void	set_new_tile_after_movement();
+
 		void	handle_direction(Direction dir);
+
 		bool	check_end_game();
-		void	update_score(int val);
+
 		int		get_score();
+		void	update_score(int val);
+		
+		bool	undo();
+		int		get_undo_counter();
+		void	decrement_undo();
+		void	reset_undo_counter();
+
+		void	new_game();
+
 		void	save_history();
 		void	delete_history();
-		bool	undo();
-		void	decrement_undo();
-		int		get_undo_counter();
-		void	reset_undo_counter();
-		void	new_game();
 		bool 	has_history() const;
+
+		
 
 		
 		

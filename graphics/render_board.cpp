@@ -21,7 +21,9 @@ void RenderBoard::draw_all(sf::RenderWindow	&window)
 
 	for (auto &tile : get_tiles())
 		tile.draw(window);
-
+	
+	if (board_ref.get_undo_counter() == 0)
+		change_undo_color();
 
     window.draw(background_score_panel);
     window.draw(score_val_panel_text);
@@ -164,4 +166,28 @@ const sf::RectangleShape &RenderBoard::get_undo_button() const
 {
     return undo_button;
 }
+
+void	RenderBoard::change_undo_color()
+{
+	undo_button_text.setFillColor(sf::Color(128, 128, 128));
+};
+
+void RenderBoard::set_game_over(sf::RenderWindow& window)
+{
+    float posX = window.getSize().x / 2.f;
+    float posY = window.getSize().y / 2.f;
+
+    game_over_text.setFont(font);
+    game_over_text.setCharacterSize(55); // maior para destaque
+    game_over_text.setString("Game Over");
+    game_over_text.setFillColor(sf::Color::Black);
+
+    sf::FloatRect textBounds = game_over_text.getLocalBounds();
+    game_over_text.setOrigin(
+        textBounds.left + textBounds.width / 2.f,
+        textBounds.top + textBounds.height / 2.f
+    );
+    game_over_text.setPosition(posX, posY);
+	window.draw(game_over_text);
+};
 

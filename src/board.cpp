@@ -1,25 +1,40 @@
+/*
+classe board:
+responsável por gerenciar a parte lógica do jogo.
+guarda todos os tiles do tabuleiro numa matriz
+lida com a criação de tiles, movimentação do board, placar, histórico, desfazer e new game.
+*/
+
 #include "board.hpp"
 #include "moves.hpp"
 
-void	Board::new_game()
+Board::Board()
 {
+	std::srand(static_cast<unsigned>(time(nullptr)));
+	score = 0;
+	undo_count = 5;
+
 	int x = 0;
 	int y = 0;
-
+	
 	while (x < 4)
 	{
 		while (y < 4)
 		{
-			grid_at(x, y).set_value(0);
-			y++;
+			grid[x][y] = Tile(x, y);
+			y++;			
 		}
 		y = 0;
 		x++;
 	}
 	set_initial_tiles();
-	this->score = 0;
-	this->undo_count = 5;	
 }
+
+Tile &Board::grid_at(int x, int y)
+{
+	return grid[x][y];
+}
+
 Tile Board::set_random_tile()
 {
 	int	rand_x;
@@ -51,7 +66,7 @@ void Board::set_initial_tiles()
 
 	grid[a.get_x()][a.get_y()].set_value(a.get_value());
 	grid[b.get_x()][b.get_y()].set_value(b.get_value());
-}	
+}
 
 bool	has_empty_tile(Board &board)
 {
@@ -90,26 +105,9 @@ void	Board::set_new_tile_after_movement()
 	this->grid_at(x, y).set_value(new_tile.get_value());
 }
 
-Board::Board()
+void Board::handle_direction(Direction dir)
 {
-	std::srand(static_cast<unsigned>(time(nullptr)));
-	score = 0;
-	undo_count = 5;
-
-	int x = 0;
-	int y = 0;
-	
-	while (x < 4)
-	{
-		while (y < 4)
-		{
-			grid[x][y] = Tile(x, y);
-			y++;			
-		}
-		y = 0;
-		x++;
-	}
-	set_initial_tiles();
+    move(*this, dir);
 }
 
 bool check_up(Board &board, int x, int y)
@@ -193,20 +191,15 @@ bool	Board::check_end_game()
 	return (false);
 }
 
-void	Board::save_history()
+int Board::get_score()
 {
-	history.insert(history.begin(), *this);
-	if (history.size() > 5) {
-		history.pop_back();
-	}
+	return (this->score);
 }
 
-void	Board::delete_history()
+void Board::update_score(int val)
 {
-	history.clear();
+	this->score += val;
 }
-
-
 
 bool	Board::undo()
 {
@@ -233,28 +226,14 @@ bool	Board::undo()
 	return (true);
 }
 
-Tile &Board::grid_at(int x, int y)
-{
-	return grid[x][y];
-}
-
-void Board::handle_direction(Direction dir)
-{
-    move(*this, dir);
-}
-
-void Board::update_score(int val)
-{
-	this->score += val;
-}
-
-int Board::get_score()
-{
-	return (this->score);
-}
 int Board::get_undo_counter()
 {
 	return (this->undo_count);
+}
+
+void Board::decrement_undo()
+{
+	this->undo_count--;
 }
 
 void		Board::reset_undo_counter()
@@ -262,15 +241,69 @@ void		Board::reset_undo_counter()
 	this->undo_count = 0;
 };
 
-void Board::decrement_undo()
+void	Board::save_history()
 {
-	this->undo_count--;
+	history.insert(history.begin(), *this);
+	if (history.size() > 5) {
+		history.pop_back();
+	}
+}
+
+void	Board::delete_history()
+{
+	history.clear();
 }
 
 bool Board::has_history() const
 {
     return !history.empty();
 }
+
+void	Board::new_game()
+{
+	int x = 0;
+	int y = 0;
+
+	while (x < 4)
+	{
+		while (y < 4)
+		{
+			grid_at(x, y).set_value(0);
+			y++;
+		}
+		y = 0;
+		x++;
+	}
+	set_initial_tiles();
+	this->score = 0;
+	this->undo_count = 5;	
+}
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

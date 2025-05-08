@@ -19,6 +19,8 @@ void GameControl::game_loop()
 		rendered_board_ref.update_score(window);
 		window.clear(sf::Color(250, 248, 239));
 		rendered_board_ref.draw_all(window);
+		if (!board_ref.check_end_game())
+			rendered_board_ref.set_game_over(window);
 		window.display();
     }
 }

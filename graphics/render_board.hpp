@@ -24,6 +24,8 @@ class RenderBoard
 		sf::RectangleShape undo_button;
 		sf::Text undo_button_text;
 
+		sf::Text game_over_text;
+
 	public:
 		RenderBoard(Board &board);
 		std::vector<RenderTile>			&get_tiles();
@@ -33,7 +35,9 @@ class RenderBoard
 		void							draw_all(sf::RenderWindow &window);
 		void							update_all_tiles();
 		void							update_score(sf::RenderWindow &window);
-		
+		void							set_game_over(sf::RenderWindow &window);
+
+		void							change_undo_color();
 		const sf::RectangleShape		&get_new_game_button() const;
 		const sf::RectangleShape		&get_undo_button() const;
 
