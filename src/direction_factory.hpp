@@ -12,7 +12,6 @@ class DirectionFactory
 {
 	public:
 		static interface_move_strategy *get_move(Direction dir);
-
 };
 
 

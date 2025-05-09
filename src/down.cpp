@@ -1,3 +1,7 @@
+/*
+faz a lógica da movimentação em coluna para fazer com que os tiles encaixem nos espaços vazios
+faz a lógica para mergear tiles com o mesmo valor
+*/
 #include "down.hpp"
 
 void	Down::move(Board &board)

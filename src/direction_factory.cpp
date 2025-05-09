@@ -1,3 +1,6 @@
+/*
+seta a direção a ser movimetada
+*/
 #include "direction_factory.hpp"
 #include "interface_move.hpp"
 

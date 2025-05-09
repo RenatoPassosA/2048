@@ -2,7 +2,6 @@
 #define GAME_HPP
 
 #include "./src/board.hpp"
-#include "./src/moves.hpp"
 #include "./src/tile.hpp"
 #include "./src/game_control.hpp"
 #include "./graphics/render_tile.hpp"

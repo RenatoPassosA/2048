@@ -1,6 +1,11 @@
 #include <gtest/gtest.h>
 #include "../src/board.hpp"
 #include "../src/tile.hpp"
+#include "../src/interface_move.hpp"
+#include "../src/left.hpp"
+#include "../src/right.hpp"
+#include "../src/up.hpp"
+#include "../src/down.hpp"
 #include "./tests.hpp"
 
 //TESTS board initialization
@@ -64,6 +69,7 @@ TEST(set_initial_tiles, setting_two_tiles_on_game_init)
 TEST(move_left, simple_move_left)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Left();
 
 	int initial[4][4] = {
 		{2, 0, 0, 0},
@@ -79,7 +85,7 @@ TEST(move_left, simple_move_left)
 	};
 
 	load_board(board, initial);
-	move_left(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -90,6 +96,7 @@ TEST(move_left, simple_move_left)
 TEST(move_left, simple_move_left_no_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Left();
 
 	int initial[4][4] = {
 		{0, 0, 2, 4},
@@ -105,7 +112,7 @@ TEST(move_left, simple_move_left_no_merge)
 	};
 
 	load_board(board, initial);
-	move_left(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -117,6 +124,7 @@ TEST(move_left, simple_move_left_no_merge)
 TEST(move_left, simple_move_left_with_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Left();
 
 	int initial[4][4] = {
 		{2, 2, 0, 0},
@@ -132,7 +140,7 @@ TEST(move_left, simple_move_left_with_merge)
 	};
 
 	load_board(board, initial);
-	move_left(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -143,6 +151,7 @@ TEST(move_left, simple_move_left_with_merge)
 TEST(move_left, complex_move_left)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Left();
 
 	int initial[4][4] = {
 		{2, 0, 0, 0},
@@ -158,7 +167,7 @@ TEST(move_left, complex_move_left)
 	};
 
 	load_board(board, initial);
-	move_left(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -169,6 +178,7 @@ TEST(move_left, complex_move_left)
 TEST(move_left, complex_move_left_no_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Left();
 
 	int initial[4][4] = {
 		{2, 4, 0, 0},
@@ -184,7 +194,7 @@ TEST(move_left, complex_move_left_no_merge)
 	};
 
 	load_board(board, initial);
-	move_left(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -195,6 +205,7 @@ TEST(move_left, complex_move_left_no_merge)
 TEST(move_left, complex_move_left_with_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Left();
 
 	int initial[4][4] = {
 		{2, 2, 2, 0},
@@ -210,7 +221,7 @@ TEST(move_left, complex_move_left_with_merge)
 	};
 
 	load_board(board, initial);
-	move_left(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -221,6 +232,7 @@ TEST(move_left, complex_move_left_with_merge)
 TEST(move_left, multiple_merge_with_different_values)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Left();
 
 	int initial[4][4] = {
 		{4, 4, 32, 32},
@@ -236,7 +248,7 @@ TEST(move_left, multiple_merge_with_different_values)
 	};
 
 	load_board(board, initial);
-	move_left(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -248,6 +260,7 @@ TEST(move_left, multiple_merge_with_different_values)
 TEST(move_right, simple_move_right)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Right();
 
 	int initial[4][4] = {
 		{2, 0, 0, 0},
@@ -263,7 +276,7 @@ TEST(move_right, simple_move_right)
 	};
 
 	load_board(board, initial);
-	move_right(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -274,6 +287,7 @@ TEST(move_right, simple_move_right)
 TEST(move_right, simple_move_right_no_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Right();
 
 	int initial[4][4] = {
 		{2, 4, 0, 0},
@@ -289,7 +303,7 @@ TEST(move_right, simple_move_right_no_merge)
 	};
 
 	load_board(board, initial);
-	move_right(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -300,6 +314,7 @@ TEST(move_right, simple_move_right_no_merge)
 TEST(move_right, simple_move_right_with_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Right();
 
 	int initial[4][4] = {
 		{2, 2, 0, 0},
@@ -315,7 +330,7 @@ TEST(move_right, simple_move_right_with_merge)
 	};
 
 	load_board(board, initial);
-	move_right(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -326,6 +341,7 @@ TEST(move_right, simple_move_right_with_merge)
 TEST(move_right, complex_move_right)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Right();
 
 	int initial[4][4] = {
 		{2, 0, 0, 0},
@@ -341,7 +357,7 @@ TEST(move_right, complex_move_right)
 	};
 
 	load_board(board, initial);
-	move_right(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -352,6 +368,7 @@ TEST(move_right, complex_move_right)
 TEST(move_right, complex_move_right_no_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Right();
 
 	int initial[4][4] = {
 		{2, 4, 0, 0},
@@ -367,7 +384,7 @@ TEST(move_right, complex_move_right_no_merge)
 	};
 
 	load_board(board, initial);
-	move_right(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -378,6 +395,7 @@ TEST(move_right, complex_move_right_no_merge)
 TEST(move_right, complex_move_right_with_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Right();
 
 	int initial[4][4] = {
 		{4, 4, 0, 0},
@@ -393,7 +411,7 @@ TEST(move_right, complex_move_right_with_merge)
 	};
 
 	load_board(board, initial);
-	move_right(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -404,6 +422,7 @@ TEST(move_right, complex_move_right_with_merge)
 TEST(move_right, multiple_merge_with_different_values)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Right();
 
 	int initial[4][4] = {
 		{8,   8,   32,  32},
@@ -419,7 +438,7 @@ TEST(move_right, multiple_merge_with_different_values)
 	};
 
 	load_board(board, initial);
-	move_right(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -431,6 +450,7 @@ TEST(move_right, multiple_merge_with_different_values)
 TEST(move_up, simple_move_up)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Up();
 
 	int initial[4][4] = {
 		{0, 0, 0, 0},
@@ -446,7 +466,7 @@ TEST(move_up, simple_move_up)
 	};
 
 	load_board(board, initial);
-	move_up(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -456,6 +476,7 @@ TEST(move_up, simple_move_up)
 TEST(move_up, simple_move_up_no_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Up();
 
 	int initial[4][4] = {
 		{0, 0, 0, 0},
@@ -471,7 +492,7 @@ TEST(move_up, simple_move_up_no_merge)
 	};
 
 	load_board(board, initial);
-	move_up(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -481,6 +502,7 @@ TEST(move_up, simple_move_up_no_merge)
 TEST(move_up, simple_move_up_with_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Up();
 
 	int initial[4][4] = {
 		{0, 0, 0, 0},
@@ -496,7 +518,7 @@ TEST(move_up, simple_move_up_with_merge)
 	};
 
 	load_board(board, initial);
-	move_up(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -506,6 +528,7 @@ TEST(move_up, simple_move_up_with_merge)
 TEST(move_up, complex_move_up)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Up();
 
 	int initial[4][4] = {
 		{0, 0, 0, 2},
@@ -521,7 +544,7 @@ TEST(move_up, complex_move_up)
 	};
 
 	load_board(board, initial);
-	move_up(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -531,6 +554,7 @@ TEST(move_up, complex_move_up)
 TEST(move_up, complex_move_up_no_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Up();
 
 	int initial[4][4] = {
 		{0, 0, 0, 0},
@@ -546,7 +570,7 @@ TEST(move_up, complex_move_up_no_merge)
 	};
 
 	load_board(board, initial);
-	move_up(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -556,6 +580,7 @@ TEST(move_up, complex_move_up_no_merge)
 TEST(move_up, complex_move_up_with_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Up();
 
 	int initial[4][4] = {
 		{0, 2, 2, 2},
@@ -571,7 +596,7 @@ TEST(move_up, complex_move_up_with_merge)
 	};
 
 	load_board(board, initial);
-	move_up(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -581,6 +606,7 @@ TEST(move_up, complex_move_up_with_merge)
 TEST(move_up, multiple_merge_with_different_values)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Up();
 
 	int initial[4][4] = {
 		{128, 8,   256, 64},
@@ -596,7 +622,7 @@ TEST(move_up, multiple_merge_with_different_values)
 	};
 
 	load_board(board, initial);
-	move_up(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -608,6 +634,7 @@ TEST(move_up, multiple_merge_with_different_values)
 TEST(move_down, simple_move_down)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Down();
 
 	int initial[4][4] = {
 		{2, 0, 0, 0},
@@ -623,7 +650,7 @@ TEST(move_down, simple_move_down)
 	};
 
 	load_board(board, initial);
-	move_down(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -633,6 +660,7 @@ TEST(move_down, simple_move_down)
 TEST(move_down, simple_move_down_no_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Down();
 
 	int initial[4][4] = {
 		{2, 0, 0, 0},
@@ -648,7 +676,7 @@ TEST(move_down, simple_move_down_no_merge)
 	};
 
 	load_board(board, initial);
-	move_down(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -658,6 +686,7 @@ TEST(move_down, simple_move_down_no_merge)
 TEST(move_down, simple_move_down_with_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Down();
 
 	int initial[4][4] = {
 		{2, 0, 0, 0},
@@ -673,7 +702,7 @@ TEST(move_down, simple_move_down_with_merge)
 	};
 
 	load_board(board, initial);
-	move_down(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -683,6 +712,7 @@ TEST(move_down, simple_move_down_with_merge)
 TEST(move_down, complex_move_down)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Down();
 
 	int initial[4][4] = {
 		{2, 0, 0, 0},
@@ -698,7 +728,7 @@ TEST(move_down, complex_move_down)
 	};
 
 	load_board(board, initial);
-	move_down(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -708,6 +738,7 @@ TEST(move_down, complex_move_down)
 TEST(move_down, complex_move_down_no_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Down();
 
 	int initial[4][4] = {
 		{2, 4, 0, 2},
@@ -723,7 +754,7 @@ TEST(move_down, complex_move_down_no_merge)
 	};
 
 	load_board(board, initial);
-	move_down(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -733,6 +764,7 @@ TEST(move_down, complex_move_down_no_merge)
 TEST(move_down, complex_move_down_with_merge)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Down();
 
 	int initial[4][4] = {
 		{4, 0, 0, 2},
@@ -748,7 +780,7 @@ TEST(move_down, complex_move_down_with_merge)
 	};
 
 	load_board(board, initial);
-	move_down(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -758,6 +790,7 @@ TEST(move_down, complex_move_down_with_merge)
 TEST(move_down, multiple_merge_with_different_values)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Down();
 
 	int initial[4][4] = {
 		{128, 8,   256, 64},
@@ -773,7 +806,7 @@ TEST(move_down, multiple_merge_with_different_values)
 	};
 
 	load_board(board, initial);
-	move_down(board);
+	find_direction->move(board);
 	bool result = compare_board(board, expected);
 
 	check_print(result, board, expected);
@@ -824,6 +857,7 @@ TEST(set_new_tile_after_movement, set_new_tile_after_move_and_check_value)
 TEST(update_score, score_increases_correctly_after_move_left)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Left();
 	int expected = 20;
 
 	int initial[4][4] = {
@@ -836,7 +870,7 @@ TEST(update_score, score_increases_correctly_after_move_left)
 	ASSERT_EQ(board.get_score(), 0); //verificação se o score estava 0
 
 	load_board(board, initial);
-	move_left(board);
+	find_direction->move(board);
 	
 	ASSERT_EQ(board.get_score(), expected);
 }
@@ -926,6 +960,7 @@ TEST(check_end_game, board_with_no_possible_merge)
 TEST(undo, simple_undo)
 {
 	Board board;
+	interface_move_strategy* find_direction = new Right();
 	
 	int initial[4][4] = {
 		{2, 2, 4, 4}, // 0 0 4 8
@@ -943,7 +978,7 @@ TEST(undo, simple_undo)
 
 	load_board(board, initial);
 	board.save_history();
-	move_right(board);
+	find_direction->move(board);
 	board.undo();
 
 	ASSERT_TRUE(compare_board(board, expected));
@@ -952,12 +987,14 @@ TEST(undo, simple_undo)
 TEST(undo, simple_undo_after_2_moves)
 {
 	Board board;
+	interface_move_strategy* right_dir = new Right();
+	interface_move_strategy* down_dir = new Down();
 	
 	int initial[4][4] = {
-		{2, 2, 4, 4}, // 0 0 4 8  // 0 0 0 0
-		{2, 2, 2, 2}, // 0 0 4 4  // 0 0 0 8
-		{4, 0, 4, 0}, // 0 0 0 8  // 0 0 8 4
-		{2, 2, 2, 4}  // 0 2 4 4  // 0 0 8 8
+		{2, 2, 4, 4}, // 0 0 4 8  // 0 0 0 8
+		{2, 2, 2, 2}, // 0 0 4 4  // 0 0 0 4
+		{4, 0, 4, 0}, // 0 0 0 8  // 0 0 4 8
+		{2, 2, 2, 4}  // 0 2 4 4  // 0 2 8 4
 	};
 
 	int expected[4][4] = {
@@ -969,9 +1006,9 @@ TEST(undo, simple_undo_after_2_moves)
 
 	load_board(board, initial);
 	board.save_history();
-	move_right(board);
+	right_dir->move(board);
 	board.save_history();
-	move_down(board);
+	down_dir->move(board);
 	board.undo();
 	
 	ASSERT_TRUE(compare_board(board, expected));
@@ -981,6 +1018,9 @@ TEST(undo, simple_undo_after_2_moves)
 TEST(undo, simple_undo_after_3_moves)
 {
 	Board board;
+	interface_move_strategy* right_dir = new Right();
+	interface_move_strategy* up_dir = new Up();
+	interface_move_strategy* down_dir = new Down();
 	
 	int initial[4][4] = {
 		{2, 2, 4, 4}, // 0 0 4 8    // 0 0 0 8
@@ -998,11 +1038,11 @@ TEST(undo, simple_undo_after_3_moves)
 
 	load_board(board, initial);
 	board.save_history();
-	move_right(board);
+	right_dir->move(board);
 	board.save_history();
-	move_down(board);
+	down_dir->move(board);
 	board.save_history();
-	move_up(board);
+	up_dir->move(board);
 	board.undo();
 
 	ASSERT_TRUE(compare_board(board, expected));
@@ -1012,6 +1052,10 @@ TEST(undo, simple_undo_after_3_moves)
 TEST(undo, 5_times_undo_after_5_moves)
 {
 	Board board;
+	interface_move_strategy* right_dir = new Right();
+	interface_move_strategy* left_dir = new Left();
+	interface_move_strategy* up_dir = new Up();
+	interface_move_strategy* down_dir = new Down();
 	
 	int initial[4][4] = {
 		{2, 2, 4, 4},     // 0 0 8 8     // 0 0 0 8   // 0 2 16 8  // 0 2 16 8  // 2 16 8 0
@@ -1029,15 +1073,15 @@ TEST(undo, 5_times_undo_after_5_moves)
 
 	load_board(board, initial);
 	board.save_history();
-	move_right(board);
+	right_dir->move(board);
 	board.save_history();
-	move_down(board);
+	down_dir->move(board);
 	board.save_history();
-	move_up(board);
+	up_dir->move(board);
 	board.save_history();
-	move_right(board);
+	right_dir->move(board);
 	board.save_history();
-	move_left(board);
+	left_dir->move(board);
 	board.undo();
 	board.undo();
 	board.undo();
@@ -1050,6 +1094,10 @@ TEST(undo, 5_times_undo_after_5_moves)
 TEST(undo, new_move_in_middle_of_history_check_previous)
 {
 	Board board;
+	interface_move_strategy* right_dir = new Right();
+	interface_move_strategy* left_dir = new Left();
+	interface_move_strategy* up_dir = new Up();
+	interface_move_strategy* down_dir = new Down();
 	
 	int initial[4][4] = {
 		{4, 4, 4, 4}, // 0 0 8 8    // 0 0 0  8  // 0 2 8  8
@@ -1074,15 +1122,15 @@ TEST(undo, new_move_in_middle_of_history_check_previous)
 
 	load_board(board, initial);
 	board.save_history();
-	move_right(board);
+	right_dir->move(board);
 	board.save_history();
-	move_down(board);
+	down_dir->move(board);
 	board.save_history();
-	move_up(board);
+	up_dir->move(board);
 	board.save_history();
-	move_down(board);
+	down_dir->move(board);
 	board.save_history();
-	move_right(board);
+	right_dir->move(board);
 	board.undo();
 	board.undo();
 
@@ -1091,7 +1139,7 @@ TEST(undo, new_move_in_middle_of_history_check_previous)
 	EXPECT_TRUE(compare_board(board, expected1));
 
 	board.save_history();
-	move_left(board);
+	left_dir->move(board);
 	board.undo();
 	board.undo();
 
@@ -1104,6 +1152,10 @@ TEST(undo, new_move_in_middle_of_history_check_previous)
 TEST(undo, calling_undo_more_than_5_times)
 {
 	Board board;
+	interface_move_strategy* right_dir = new Right();
+	interface_move_strategy* left_dir = new Left();
+	interface_move_strategy* up_dir = new Up();
+	interface_move_strategy* down_dir = new Down();
 	bool arr[5];
 	
 	int initial[4][4] = {
@@ -1115,17 +1167,17 @@ TEST(undo, calling_undo_more_than_5_times)
 
 	load_board(board, initial);
 	board.save_history();
-	move_right(board);
+	right_dir->move(board);
 	board.save_history();
-	move_down(board);
+	down_dir->move(board);
 	board.save_history();
-	move_up(board);
+	up_dir->move(board);
 	board.save_history();
-	move_right(board);
+	right_dir->move(board);
 	board.save_history();
-	move_left(board);
+	left_dir->move(board);
 	board.save_history();
-	move_left(board);
+	left_dir->move(board);
 	arr[0] = board.undo();
 	arr[1] = board.undo();
 	arr[2] = board.undo();

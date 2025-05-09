@@ -6,7 +6,6 @@ lida com a criação de tiles, movimentação do board, placar, histórico, desf
 */
 
 #include "board.hpp"
-#include "moves.hpp"
 #include "direction_factory.hpp"
 
 Board::Board()
@@ -108,15 +107,15 @@ void	Board::set_new_tile_after_movement()
 
 void Board::handle_direction(Direction dir)
 {
-	interface_move_strategy* strategy = DirectionFactory::get_move(dir);
-	if (!strategy->can_move(*this))
+	interface_move_strategy* find_direction = DirectionFactory::get_move(dir);
+	if (!find_direction->can_move(*this))
 	{
-		delete strategy;
+		delete find_direction;
 		return ;
 	}
 	save_history();
-    strategy->move(*this);
-    delete strategy;
+    find_direction->move(*this);
+    delete find_direction;
 	set_new_tile_after_movement();
 }
 
